@@ -306,8 +306,20 @@
         |-- TabNavigator.jsx
     |-- screens
         |-- AddNewProjectScreen.jsx
+        |-- components
+            |-- MainLayout.jsx
+            |-- Sidebar.jsx
         |-- DashboardScreen.jsx
         |-- HomeScreen.jsx
+        |-- MyProjectsScreen.jsx
+        |-- OrganizationEmailScreen.jsx
         |-- ProfileScreen.jsx
+        |-- ProjectOverviewScreen.jsx
+        |-- SettingsEventsScreen.jsx
+        |-- SettingsPermissionScreen.jsx
+        |-- SettingsReminderScreen.jsx
+        |-- SettingsScheduleScreen.jsx
         |-- SettingsScreen.jsx
+        |-- UsersMembersScreen.jsx
+        |-- UsersVendorsScreen.jsx
 |-- tailwind.config.js
