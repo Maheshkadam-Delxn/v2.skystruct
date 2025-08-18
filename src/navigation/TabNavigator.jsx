@@ -98,6 +98,7 @@ export default function MyTabs({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false, // Hide header for all tabs
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -113,7 +114,6 @@ export default function MyTabs({ navigation }) {
         },
         tabBarActiveTintColor: '#007AFF',
         tabBarInactiveTintColor: 'gray',
-        headerShown: true,
       })}
     >
       <Tab.Screen
