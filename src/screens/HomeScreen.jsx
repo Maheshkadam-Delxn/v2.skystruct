@@ -103,8 +103,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Create New Project Section */}
-        <View className="mb-8 px-6 py-4">
-          <Text className="mb-4 text-lg font-bold text-gray-800">Create New Project</Text>
+        <View className="mb-8 px-6 py-6">
           <View className="flex-row items-center">
             <View className="mr-2 flex-1 flex-row items-center rounded-2xl bg-gray-100 px-4 py-3">
               <Feather name="search" size={20} color="#6b7280" style={{ marginRight: 8 }} />
