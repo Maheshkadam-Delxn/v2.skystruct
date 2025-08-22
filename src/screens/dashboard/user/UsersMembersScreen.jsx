@@ -157,7 +157,7 @@ export default function UsersMembersScreen() {
           
           {/* Plus icon with box and radius */}
           <TouchableOpacity 
-            className="ml-3 bg-indigo-600 w-12 h-12 rounded-xl items-center justify-center shadow-sm"
+            className="ml-3 bg-blue-600 w-12 h-12 rounded-xl items-center justify-center shadow-sm" // Changed to blue-600
             onPress={openModal}
           >
             <Ionicons name="add" size={24} color="white" />
@@ -165,12 +165,12 @@ export default function UsersMembersScreen() {
           
           {/* Add new user icon */}
           <TouchableOpacity className="ml-3 bg-white w-12 h-12 rounded-xl items-center justify-center shadow-sm border border-gray-200">
-            <Ionicons name="person-add" size={24} color="#4f46e5" />
+            <Ionicons name="person-add" size={24} color="#2563eb" /> {/* Changed to blue-600 */}
           </TouchableOpacity>
           
           {/* Filter icon */}
           <TouchableOpacity className="ml-3 bg-white w-12 h-12 rounded-xl items-center justify-center shadow-sm border border-gray-200">
-            <Ionicons name="filter" size={24} color="#4f46e5" />
+            <Ionicons name="filter" size={24} color="#2563eb" /> {/* Changed to blue-600 */}
           </TouchableOpacity>
         </View>
         
@@ -274,7 +274,7 @@ export default function UsersMembersScreen() {
 
                     <View className="flex-row justify-between mt-6">
                       <TouchableOpacity 
-                        className="flex-1 bg-indigo-600 rounded-xl p-4 items-center mr-3"
+                        className="flex-1 bg-blue-600 rounded-xl p-4 items-center mr-3" // Changed to blue-600
                         onPress={handleSubmit}
                       >
                         <Text className="text-white font-semibold">Submit</Text>
@@ -297,15 +297,6 @@ export default function UsersMembersScreen() {
                           <View className="flex-1">
                             <Text className="text-gray-800 font-medium">{department.name}</Text>
                           </View>
-                          
-                          {/* <TouchableOpacity 
-                            className={`px-3 py-1 rounded-full mr-3 ${department.status === 'Active' ? 'bg-green-100' : 'bg-red-100'}`}
-                            onPress={() => toggleStatus(department)}
-                          >
-                            <Text className={`text-xs font-semibold ${department.status === 'Active' ? 'text-green-700' : 'text-red-700'}`}>
-                              {department.status}
-                            </Text>
-                          </TouchableOpacity> */}
                           
                           <View className="flex-row">
                             <TouchableOpacity 
