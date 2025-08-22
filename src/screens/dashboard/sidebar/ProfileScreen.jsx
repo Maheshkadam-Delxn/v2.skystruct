@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, TextInput, Animated, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
-import MainLayout from '../screens/components/MainLayout';
+import MainLayout from '../../components/MainLayout';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'; // For image picking
 

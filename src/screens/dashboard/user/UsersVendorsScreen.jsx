@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native';
-import MainLayout from '../screens/components/MainLayout';
+import MainLayout from '../../components/MainLayout';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 export default function UsersVendorsScreen() {

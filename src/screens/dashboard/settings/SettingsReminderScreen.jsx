@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import MainLayout from '../screens/components/MainLayout';
+import { View, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import MainLayout from '../../components/MainLayout';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function SettingsEventsScreen() {
   const [expandedCards, setExpandedCards] = useState({});
+  const [searchQuery, setSearchQuery] = useState('');
 
   const toggleCard = (index) => {
     setExpandedCards(prev => ({
@@ -15,8 +16,8 @@ export default function SettingsEventsScreen() {
 
   const events = [
     {
-      name: 'RFI Creation',
-      module: 'RFI',
+      name: 'Activity Expired',
+      module: 'Activity',
       project: 'Granite Horizon',
       actionType: 'Created',
       alertType: 'Mail, Notification',
@@ -25,7 +26,7 @@ export default function SettingsEventsScreen() {
       isActive: true
     },
     {
-      name: 'Submittal Log creation',
+      name: ' Log creation',
       module: 'Submittal Log',
       project: 'Granite Horizon',
       actionType: 'Created',
@@ -34,34 +35,37 @@ export default function SettingsEventsScreen() {
       message: '{{Document_Number}} {{Submittal_No}}{{Status}}{{Date}}{{Revision}}{{Document_Title}}{{Location}}{{Project}}{{Description}}{{Descipline}}',
       isActive: true
     },
-    {
-      name: 'Activity created',
-      module: 'Activity',
-      project: 'Granite Horizon',
-      actionType: 'Created',
-      alertType: 'Notification',
-      sentTo: 'All Members',
-      message: 'New activity has been created in the system',
-      isActive: true
-    },
-    {
-      name: 'BOQ Updated',
-      module: 'BOQ',
-      project: 'Granite Horizon',
-      actionType: 'Updated',
-      alertType: 'Mail, Notification',
-      sentTo: 'Finance Team',
-      message: 'Bill of Quantities has been updated with new items',
-      isActive: true
-    }
   ];
 
   return (
-    <MainLayout title="Events">
+    <MainLayout title="Reminder">
       <ScrollView className="flex-1 px-5 py-4 bg-gray-50">
         <View className="mb-6">
-          <Text className="text-2xl font-bold text-gray-900 mb-2">Event Settings</Text>
-          <Text className="text-sm text-gray-500">Manage project-related events and notifications</Text>
+          <Text className="text-2xl font-bold text-gray-900 mb-2">Reminder Settings</Text>
+          <Text className="text-sm text-gray-500">Manage project reminders</Text>
+        </View>
+        {/* Search and Filter Row */}
+        <View className="flex-row items-center justify-between mb-6">
+          {/* Search Bar */}
+          <View className="flex-1 flex-row items-center bg-white rounded-xl px-4 py-2 mr-3 border border-gray-200">
+            <Ionicons name="search" size={20} color="#9ca3af" />
+            <TextInput
+              className="flex-1 ml-2 text-gray-700"
+              placeholder="Search events..."
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
+          
+          {/* Plus Icon */}
+          <TouchableOpacity className="bg-indigo-600 p-3 rounded-xl mr-3">
+            <Ionicons name="add" size={22} color="white" />
+          </TouchableOpacity>
+          
+          {/* Filter Icon */}
+          <TouchableOpacity className="bg-white p-3 rounded-xl border border-gray-200">
+            <Ionicons name="filter" size={22} color="#4b5563" />
+          </TouchableOpacity>
         </View>
 
         {/* Events list */}
@@ -90,7 +94,7 @@ export default function SettingsEventsScreen() {
                   {/* Event details */}
                   <View className="flex-1">
                     <Text className="text-lg font-semibold text-gray-900">{event.name}</Text>
-                    <Text className="text-sm text-gray-500 mt-1">Module: {event.module}</Text>
+                    <Text className="text-sm text-gray-500 mt-1">Subject: {event.module}</Text>
                     <Text className="text-sm text-gray-500">Project: {event.project}</Text>
                   </View>
                 </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import MainLayout from '../screens/components/MainLayout'; // Adjust the import path as necessary
+import MainLayout from '../../components/MainLayout'; // Adjust the import path as necessary
 export default function MyProjectsScreen() {
   return (
     <MainLayout title="My Projects">

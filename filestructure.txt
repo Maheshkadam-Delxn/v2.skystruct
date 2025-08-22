@@ -309,17 +309,22 @@
         |-- components
             |-- MainLayout.jsx
             |-- Sidebar.jsx
-        |-- DashboardScreen.jsx
+        |-- dashboard
+            |-- DashboardHeader.jsx
+            |-- DashboardScreen.jsx
+            |-- ProjectOverviewScreen.jsx
+            |-- settings
+                |-- SettingsEventsScreen.jsx
+                |-- SettingsPermissionScreen.jsx
+                |-- SettingsReminderScreen.jsx
+                |-- SettingsScheduleScreen.jsx
+                |-- SettingsScreen.jsx
+            |-- sidebar
+                |-- MyProjectsScreen.jsx
+                |-- OrganizationEmailScreen.jsx
+                |-- ProfileScreen.jsx
+            |-- user
+                |-- UsersMembersScreen.jsx
+                |-- UsersVendorsScreen.jsx
         |-- HomeScreen.jsx
-        |-- MyProjectsScreen.jsx
-        |-- OrganizationEmailScreen.jsx
-        |-- ProfileScreen.jsx
-        |-- ProjectOverviewScreen.jsx
-        |-- SettingsEventsScreen.jsx
-        |-- SettingsPermissionScreen.jsx
-        |-- SettingsReminderScreen.jsx
-        |-- SettingsScheduleScreen.jsx
-        |-- SettingsScreen.jsx
-        |-- UsersMembersScreen.jsx
-        |-- UsersVendorsScreen.jsx
 |-- tailwind.config.js

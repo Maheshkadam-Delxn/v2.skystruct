@@ -89,8 +89,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import ProfileScreen from '../screens/dashboard/sidebar/ProfileScreen';
+import SettingsScreen from '../screens/dashboard/settings/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 
