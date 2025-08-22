@@ -63,7 +63,7 @@ export default function SettingsEventsScreen() {
           </View>
           
           {/* Plus Icon */}
-          <TouchableOpacity className="bg-indigo-600 p-3 rounded-xl mr-3">
+          <TouchableOpacity className="bg-blue-600 p-3 rounded-xl mr-3">
             <Ionicons name="add" size={22} color="white" />
           </TouchableOpacity>
           
@@ -155,7 +155,7 @@ export default function SettingsEventsScreen() {
               <View className="flex-row justify-between items-center border-t border-gray-100 pt-3">
                 <View className="flex-row space-x-6">
                   <TouchableOpacity className="flex-row items-center px-3 py-2 rounded-lg">
-                    <Ionicons name="create-outline" size={22} color="#4f46e5" />
+                    <Ionicons name="create-outline" size={22} color="#2563eb" />
                     <Text className="text-sm font-medium text-indigo-600 ml-1"></Text>
                   </TouchableOpacity>
                   
@@ -180,7 +180,7 @@ export default function SettingsEventsScreen() {
         </View>
 
         {/* Help button */}
-        <TouchableOpacity className="mt-6 bg-indigo-600 rounded-xl p-4 items-center shadow-sm mb-20">
+        <TouchableOpacity className="mt-6 bg-blue-600 rounded-xl p-4 items-center shadow-sm mb-20">
           <Text className="text-white text-sm font-medium">Need Help?</Text>
         </TouchableOpacity>
       </ScrollView>

@@ -23,7 +23,7 @@ export default function UsersVendorsScreen() {
       gstinNo: '45S4DGFD556',
       vendorType: 'Subcontractor',
       address: '45 Supply Road, Bengaluru, KA',
-      image: 'https://images.unsplash.com/photo-1560472355-536de3962603?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80'
+      image: 'https://images.unsplash.com/photo-1560472355-536de3962603?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto-format&fit=crop&w=870&q=80'
     },
     {
       name: 'Prime Electricals',
@@ -68,18 +68,18 @@ export default function UsersVendorsScreen() {
           </View>
           
           {/* Plus icon with box and radius */}
-          <TouchableOpacity className="ml-3 bg-indigo-600 w-12 h-12 rounded-xl items-center justify-center shadow-sm">
+          <TouchableOpacity className="ml-3 bg-blue-600 w-12 h-12 rounded-xl items-center justify-center shadow-sm"> {/* Changed to blue-600 */}
             <Ionicons name="add" size={24} color="white" />
           </TouchableOpacity>
           
           {/* Add document icon */}
           <TouchableOpacity className="ml-3 bg-white w-12 h-12 rounded-xl items-center justify-center shadow-sm border border-gray-200">
-            <Ionicons name="document-attach" size={24} color="#4f46e5" />
+            <Ionicons name="document-attach" size={24} color="#2563eb" /> {/* Changed to blue-600 */}
           </TouchableOpacity>
           
           {/* User details icon */}
           <TouchableOpacity className="ml-3 bg-white w-12 h-12 rounded-xl items-center justify-center shadow-sm border border-gray-200">
-            <Ionicons name="people" size={24} color="#4f46e5" />
+            <Ionicons name="people" size={24} color="#2563eb" /> {/* Changed to blue-600 */}
           </TouchableOpacity>
         </View>
         
@@ -95,14 +95,14 @@ export default function UsersVendorsScreen() {
                   />
                   <View className="flex-1">
                     <Text className="text-lg font-bold text-gray-900">{vendor.name}</Text>
-                    <Text className="text-sm text-indigo-600 font-medium">{vendor.email}</Text>
+                    <Text className="text-sm text-blue-600 font-medium">{vendor.email}</Text> {/* Changed to blue-600 */}
                   </View>
                 </View>
                 
                 {/* Edit and Delete icons */}
                 <View className="flex-row items-center">
                   <TouchableOpacity className="p-2 ml-2">
-                    <Ionicons name="create-outline" size={20} color="#4f46e5" />
+                    <Ionicons name="create-outline" size={20} color="#2563eb" /> {/* Changed to blue-600 */}
                   </TouchableOpacity>
                   <TouchableOpacity className="p-2 ml-2">
                     <Ionicons name="trash-outline" size={20} color="#ef4444" />
@@ -113,8 +113,8 @@ export default function UsersVendorsScreen() {
               <View className="border-t border-gray-100 pt-4">
                 {/* Vendor Code */}
                 <View className="flex-row items-center mb-3">
-                  <View className="bg-indigo-100 p-2 rounded-lg mr-3">
-                    <Ionicons name="barcode-outline" size={16} color="#4f46e5" />
+                  <View className="bg-blue-100 p-2 rounded-lg mr-3"> {/* Changed to blue-100 */}
+                    <Ionicons name="barcode-outline" size={16} color="#2563eb" /> {/* Changed to blue-600 */}
                   </View>
                   <View>
                     <Text className="text-xs text-gray-500 font-medium">Vendor Code</Text>
@@ -146,8 +146,8 @@ export default function UsersVendorsScreen() {
                 
                 {/* Vendor Type */}
                 <View className="flex-row items-center mb-3">
-                  <View className="bg-blue-100 p-2 rounded-lg mr-3">
-                    <Ionicons name="business-outline" size={16} color="#3b82f6" />
+                  <View className="bg-blue-100 p-2 rounded-lg mr-3"> {/* Changed to blue-100 */}
+                    <Ionicons name="business-outline" size={16} color="#2563eb" /> {/* Changed to blue-600 */}
                   </View>
                   <View>
                     <Text className="text-xs text-gray-500 font-medium">Vendor Type</Text>
@@ -171,7 +171,7 @@ export default function UsersVendorsScreen() {
         </View>
         
         {/* Help button */}
-        <TouchableOpacity className="mt-6 bg-indigo-600 rounded-xl p-4 items-center shadow-sm mb-20">
+        <TouchableOpacity className="mt-6 bg-blue-600 rounded-xl p-4 items-center shadow-sm mb-20"> {/* Changed to blue-600 */}
           <Text className="text-white text-sm font-medium">Need Help?</Text>
         </TouchableOpacity>
       </ScrollView>

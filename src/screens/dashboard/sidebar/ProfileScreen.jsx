@@ -48,7 +48,7 @@ const AnimatedInput = ({ label, value, onChangeText, secureTextEntry = false, ke
     }),
     color: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: ['#6b7280', '#4f46e5'],
+      outputRange: ['#6b7280', '#2563eb'], // Changed to blue-600
     }),
     backgroundColor: animatedValue.interpolate({
       inputRange: [0, 1],
@@ -132,7 +132,7 @@ const DepartmentDropdown = ({ value, onValueChange }) => {
     }),
     color: animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: ['#6b7280', '#4f46e5'],
+      outputRange: ['#6b7280', '#2563eb'], // Changed to blue-600
     }),
     backgroundColor: animatedValue.interpolate({
       inputRange: [0, 1],
@@ -204,7 +204,7 @@ export default function ProfileScreen() {
     code: '',
     grade: '',
     preferredLanguage: 'English',
-    signature: 'https://via.placeholder.com/150x60/4f46e5/ffffff?text=Alan+David',
+    signature: 'https://via.placeholder.com/150x60/2563eb/ffffff?text=Alan+David', // Changed to blue-600
     profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
   });
 
@@ -298,7 +298,7 @@ export default function ProfileScreen() {
               <View className="flex-1">
                 <Text className="text-xl font-bold text-gray-900">{profileData.name}</Text>
                 <Text className="text-sm text-gray-500">{profileData.email}</Text>
-                <Text className="text-xs text-indigo-600 bg-indigo-50 px-2 py-1 rounded-full mt-1 self-start">
+                <Text className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full mt-1 self-start"> {/* Changed to blue */}
                   Project Admin
                 </Text>
               </View>
@@ -306,7 +306,7 @@ export default function ProfileScreen() {
                 className="bg-gray-100 p-2 rounded-full"
                 onPress={pickImage}
               >
-                <Ionicons name="camera-outline" size={20} color="#4f46e5" />
+                <Ionicons name="camera-outline" size={20} color="#2563eb" /> {/* Changed to blue-600 */}
               </TouchableOpacity>
             </View>
 
@@ -411,7 +411,7 @@ export default function ProfileScreen() {
                     className="p-2 ml-2"
                     onPress={uploadSignature}
                   >
-                    <Ionicons name="cloud-upload-outline" size={20} color="#4f46e5" />
+                    <Ionicons name="cloud-upload-outline" size={20} color="#2563eb" /> {/* Changed to blue-600 */}
                   </TouchableOpacity>
                   <TouchableOpacity 
                     className="p-2 ml-2"
@@ -436,7 +436,7 @@ export default function ProfileScreen() {
 
             {/* Action Buttons */}
             <View className="flex-row space-x-4">
-              <TouchableOpacity className="flex-1 bg-indigo-600 rounded-xl p-4 items-center mb-5">
+              <TouchableOpacity className="flex-1 bg-blue-600 rounded-xl p-4 items-center mb-5">
                 <Text className="text-white text-sm font-medium">Update Profile</Text>
               </TouchableOpacity>
             </View>
@@ -451,4 +451,3 @@ export default function ProfileScreen() {
     </MainLayout>
   );
 }
-  
