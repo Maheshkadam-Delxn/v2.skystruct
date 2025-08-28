@@ -84,10 +84,10 @@ const AnimatedInput = ({ label, value, onChangeText, secureTextEntry = false, ke
             className="absolute right-3 top-4"
             onPress={handleEyeIconPress}
           >
-            <Ionicons 
-              name={secureTextEntry ? (isPasswordVisible ? "eye-off-outline" : "eye-outline") : iconName} 
-              size={18} 
-              color="#6b7280" 
+            <Ionicons
+              name={secureTextEntry ? (isPasswordVisible ? "eye-off-outline" : "eye-outline") : iconName}
+              size={18}
+              color="#6b7280"
             />
           </TouchableOpacity>
         )}
@@ -119,37 +119,50 @@ const DepartmentDropdown = ({ value, onValueChange }) => {
     }).start();
   }, [value, isFocused, animatedValue]);
 
-  const labelStyle = {
-    position: 'absolute',
-    left: 12,
-    top: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [16, -8],
-    }),
-    fontSize: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [14, 12],
-    }),
-    color: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['#6b7280', '#2563eb'], // Changed to blue-600
-    }),
-    backgroundColor: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['transparent', '#fff'],
-    }),
-    paddingHorizontal: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, 4],
-    }),
-    zIndex: 2,
-  };
+  const labelTop = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [16, -8],
+  });
+
+  const labelFontSize = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [14, 12],
+  });
+
+  const labelColor = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['#6b7280', '#2563eb'],
+  });
+
+  const labelBackgroundColor = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['transparent', '#fff'],
+  });
+
+  const labelPaddingHorizontal = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 4],
+  });
 
   return (
     <View className="relative mb-4">
-      <Animated.Text style={labelStyle}>
-        Department
-      </Animated.Text>
+      <Animated.View
+        style={{
+          position: 'absolute',
+          left: 12,
+          top: labelTop,
+          backgroundColor: labelBackgroundColor,
+          paddingHorizontal: labelPaddingHorizontal,
+          zIndex: 2,
+        }}
+      >
+        <Animated.Text style={{
+          fontSize: labelFontSize,
+          color: labelColor,
+        }}>
+          Department
+        </Animated.Text>
+      </Animated.View>
       <TouchableOpacity
         className="border border-gray-300 rounded-xl p-4 flex-row justify-between items-center"
         onPress={() => {
@@ -275,8 +288,8 @@ export default function ProfileScreen() {
           text: "Cancel",
           style: "cancel"
         },
-        { 
-          text: "Delete", 
+        {
+          text: "Delete",
           onPress: () => updateField('signature', ''),
           style: "destructive"
         }
@@ -302,7 +315,7 @@ export default function ProfileScreen() {
                   Project Admin
                 </Text>
               </View>
-              <TouchableOpacity 
+              <TouchableOpacity
                 className="bg-gray-100 p-2 rounded-full"
                 onPress={pickImage}
               >
@@ -407,13 +420,13 @@ export default function ProfileScreen() {
               <View className="flex-row justify-between items-center ">
                 <Text className="text-lg font-semibold text-gray-800">Signature</Text>
                 <View className="flex-row">
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     className="p-2 ml-2"
                     onPress={uploadSignature}
                   >
                     <Ionicons name="cloud-upload-outline" size={20} color="#2563eb" /> {/* Changed to blue-600 */}
                   </TouchableOpacity>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     className="p-2 ml-2"
                     onPress={deleteSignature}
                   >
@@ -450,4 +463,4 @@ export default function ProfileScreen() {
       </TouchableWithoutFeedback>
     </MainLayout>
   );
-}
+}; 
