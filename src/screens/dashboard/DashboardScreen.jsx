@@ -62,7 +62,7 @@ const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
 export default function DashboardScreen() {
   const route = useRoute();
   const { projectId } = route.params || { projectId: 1 };
-  const [selectedFilter, setSelectedFilter] = useState(null); // Changed to null initially
+  const [selectedFilter, setSelectedFilter] = useState(null);
   const [selectedSubItem, setSelectedSubItem] = useState(null);
 
   // Mock project data
@@ -214,10 +214,13 @@ export default function DashboardScreen() {
                 >
                   {filter}
                 </Text>
-                {/* Dropdown icon - only show if the filter has sub-items */}
+                {/* Dropdown icon - show for all filters that have sub-items */}
                 {dropdownItems[filter] && dropdownItems[filter].length > 0 && (
-                  <Text style={{ color: selectedFilter === filter ? 'white' : '#6B7280', fontSize: 12, marginLeft: 4 }}>
-                    {selectedFilter === filter ? '▼' : ''}
+                  <Text style={{ 
+                    color: selectedFilter === filter ? 'white' : '#6B7280', 
+                    fontSize: 12 
+                  }}>
+                    {selectedFilter === filter ? '▼' : '▼'}
                   </Text>
                 )}
               </TouchableOpacity>
