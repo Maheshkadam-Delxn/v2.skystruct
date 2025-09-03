@@ -282,3 +282,589 @@ import React, { useState } from 'react';
       </MainLayout>
     );
   }
+// import React, { useState } from 'react';
+// import { View, Text, ScrollView, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
+// import { useRoute, useNavigation } from '@react-navigation/native';
+// import Icon from 'react-native-vector-icons/MaterialIcons'; // Added for icons
+// import MainLayout from '../components/MainLayout';
+// import { PieChart, LineChart } from 'react-native-gifted-charts';
+
+// const screenWidth = Dimensions.get('window').width;
+
+// // Define colors
+// const colors = {
+//   primary: '#1E3A8A',
+//   secondary: '#6366F1',
+//   success: '#10B981',
+//   warning: '#F59E0B',
+//   info: '#3B82F6',
+//   background: '#F3F4F6',
+//   card: '#FFFFFF',
+//   text: '#111827',
+//   subtext: '#6B7280',
+// };
+
+// // Typography scale
+// const typography = {
+//   xs: { fontSize: 12, lineHeight: 18, fontWeight: '400' },
+//   sm: { fontSize: 14, lineHeight: 21, fontWeight: '400' },
+//   md: { fontSize: 16, lineHeight: 24, fontWeight: '600' },
+//   lg: { fontSize: 20, lineHeight: 30, fontWeight: '700' },
+//   xl: { fontSize: 24, lineHeight: 36, fontWeight: '700' },
+// };
+
+// // Icon mapping for cards
+// const cardIcons = {
+//   'Not Started': 'assignment',
+//   'Drawings': 'description',
+//   'Open GRN': 'inventory',
+//   'Paid Bill': 'payments',
+//   'Open Indent': 'request-quote',
+//   'Open RFI': 'help-outline',
+//   'Re-inspect': 'search',
+//   'Submittals': 'article',
+// };
+
+// const filterOptions = ['Project Resources', 'Project Planning', 'Payments', 'Work Order', 'Inventory', 'Approvals', 'Reports'];
+
+// const dropdownItems = {
+//   'Project Resources': ['Bill of Quantity', 'Drawing', 'Documents'],
+//   'Project Planning': ['Activity', 'Project Planner', 'Resource'],
+//   'Payments': ['Indent', 'Purchase Order', 'Good Receive Note', 'Bill Payment', 'Expense'],
+//   'Work Order': ['Work Order', 'Advance Payment', 'Bill', 'Bill Payment'],
+//   'Inventory': [],
+//   'Approvals': ['RFI', 'Snagging Report', 'Inspection', 'Submittals'],
+//   'Reports': ['Daily Progress', 'Activity Timelines', 'Material Consumption'],
+// };
+
+// const pieData = [
+//   { value: 45, color: colors.success, label: 'Approved' },
+//   { value: 30, color: colors.warning, label: 'Under Revision' },
+//   { value: 25, color: colors.info, label: 'Under Review' },
+// ];
+// const lineData = [{ value: 20 }, { value: 45 }, { value: 28 }, { value: 80 }, { value: 64 }, { value: 43 }];
+// const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+
+// export default function DashboardScreen() {
+//   const route = useRoute();
+//   const navigation = useNavigation();
+//   const { projectId } = route.params || { projectId: 1 };
+//   const [selectedFilter, setSelectedFilter] = useState(null);
+//   const [selectedSubItem, setSelectedSubItem] = useState(null);
+
+//   const projects = [
+//     { id: 1, name: 'Acura Heights Tower', progress: '64%', duration: '18 months', amount: '$2.5M', status: 'Under Construction' },
+//     { id: 2, name: 'Commercial Residences', progress: '89%', duration: '14 months', amount: '$1.8M', status: 'Under Construction' },
+//     { id: 3, name: 'Corporate Landmark Project', progress: '52%', duration: '24 months', amount: '$3.2M', status: 'In Design' },
+//   ];
+
+//   const project = projects.find(p => p.id === projectId);
+
+//   const pieRadius = Math.min(screenWidth * 0.4, 200);
+//   const innerRadius = pieRadius * 0.6;
+
+//   const cardData = [
+//     { title: 'Not Started', value: '18', gradient: ['#EFF6FF', '#DBEAFE'], trend: null, subheading: 'Pending Tasks' },
+//     { title: 'Drawings', value: '1', gradient: ['#FFF7ED', '#FED7AA'], trend: 'up', subheading: 'Under Review' },
+//     { title: 'Open GRN', value: '47', gradient: ['#ECFFF5', '#BBF7D0'], trend: 'down', subheading: 'Goods Received' },
+//     { title: 'Paid Bill', value: '₹49.1L', gradient: ['#F5F3FF', '#E0E7FF'], trend: 'up', subheading: 'Total Payments' },
+//     { title: 'Open Indent', value: '22', gradient: ['#FEF2F2', '#FECACA'], trend: null, subheading: 'Material Requests' },
+//     { title: 'Open RFI', value: '2', gradient: ['#FEFCE8', '#FEF3C7'], trend: 'stable', subheading: 'Information Requests' },
+//     { title: 'Re-inspect', value: '1', gradient: ['#EFF6FF', '#DBEAFE'], trend: 'urgent', subheading: 'Quality Check' },
+//     { title: 'Submittals', value: '10', gradient: ['#FDF2F8', '#FCE7F3'], trend: 'up', subheading: 'Document Review' },
+//   ];
+
+//   const getTrendIndicator = (trend) => {
+//     if (!trend) return null;
+//     const trendConfig = {
+//       up: { symbol: 'arrow-upward', color: '#10B981', bg: '#ECFDF5' },
+//       down: { symbol: 'arrow-downward', color: '#EF4444', bg: '#FEF2F2' },
+//       stable: { symbol: 'arrow-forward', color: '#6B7280', bg: '#F3F4F6' },
+//       urgent: { symbol: 'warning', color: '#F59E0B', bg: '#FFF7ED' },
+//     };
+//     const config = trendConfig[trend];
+//     return config ? (
+//       <View style={[styles.trendContainer, { backgroundColor: config.bg }]}>
+//         <Icon name={config.symbol} size={16} color={config.color} />
+//       </View>
+//     ) : null;
+//   };
+
+//   const handleFilterSelect = (filter) => {
+//     if (selectedFilter === filter) {
+//       setSelectedFilter(null);
+//       setSelectedSubItem(null);
+//     } else {
+//       setSelectedFilter(filter);
+//       setSelectedSubItem(null);
+//     }
+//   };
+
+//   const handleSubItemSelect = (subItem) => {
+//     let screenName = '';
+//     console.log('Selected subItem:', subItem);
+//     switch (subItem) {
+//       case 'Bill of Quantity':
+//         screenName = 'BillOfQuantity';
+//         console.log('Navigating to BillOfQuantity');
+//         break;
+//       case 'Drawing':
+//         screenName = 'Drawing';
+//         break;
+//       case 'Documents':
+//         screenName = 'Document';
+//         break;
+//       case 'Activity':
+//         screenName = 'Activity';
+//         break;
+//       case 'Project Planner':
+//         screenName = 'ProjectPlanner';
+//         break;
+//       case 'Resource':
+//         screenName = 'Resource';
+//         break;
+//       case 'Indent':
+//         screenName = 'Indent';
+//         break;
+//       case 'Purchase Order':
+//         screenName = 'PurchaseOrder';
+//         break;
+//       case 'Good Receive Note':
+//         screenName = 'GoodReceiveNote';
+//         break;
+//       case 'Bill Payment':
+//         screenName = 'BillPayment';
+//         break;
+//       case 'Expense':
+//         screenName = 'Expense';
+//         break;
+//       case 'Work Order':
+//         screenName = 'WorkOrder';
+//         break;
+//       case 'Advance Payment':
+//         screenName = 'AdvancePayment';
+//         break;
+//       case 'Bill':
+//         screenName = 'Bill';
+//         break;
+//       case 'RFI':
+//         screenName = 'RFI';
+//         break;
+//       case 'Snagging Report':
+//         screenName = 'SnaggingReport';
+//         break;
+//       case 'Inspection':
+//         screenName = 'Inspection';
+//         break;
+//       case 'Submittals':
+//         screenName = 'Submittals';
+//         break;
+//       case 'Daily Progress':
+//         screenName = 'DailyProgress';
+//         break;
+//       case 'Activity Timelines':
+//         screenName = 'ActivityTimelines';
+//         break;
+//       case 'Material Consumption':
+//         screenName = 'MaterialConsumption';
+//         break;
+//       default:
+//         screenName = subItem.replace(/\s+/g, '');
+//     }
+//     navigation.navigate(screenName);
+//   };
+
+//   return (
+//     <MainLayout title={project ? project.name : 'Project Dashboard'}>
+//       <View style={[styles.headerContainer, { backgroundColor: colors.background }]}>
+//         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
+//           <View style={styles.filterRow}>
+//             {filterOptions.map((filter, index) => (
+//               <TouchableOpacity
+//                 key={filter}
+//                 onPress={() => handleFilterSelect(filter)}
+//                 style={[
+//                   styles.filterButton,
+//                   selectedFilter === filter ? { backgroundColor: colors.primary } : { backgroundColor: '#E5E7EB' },
+//                 ]}
+//                 activeOpacity={0.7} // Subtle press effect
+//                 accessibilityLabel={`Filter by ${filter}`}
+//               >
+//                 <Text
+//                   style={[
+//                     styles.filterText,
+//                     selectedFilter === filter ? { color: '#FFFFFF' } : { color: colors.subtext },
+//                   ]}
+//                 >
+//                   {filter}
+//                 </Text>
+//                 {dropdownItems[filter]?.length > 0 && (
+//                   <Icon
+//                     name={selectedFilter === filter ? 'expand-more' : 'chevron-right'}
+//                     size={16}
+//                     color={selectedFilter === filter ? '#FFFFFF' : colors.subtext}
+//                   />
+//                 )}
+//               </TouchableOpacity>
+//             ))}
+//           </View>
+//         </ScrollView>
+//         {selectedFilter && dropdownItems[selectedFilter]?.length > 0 && (
+//           <View style={styles.dropdownContainer}>
+//             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+//               <View style={styles.dropdownRow}>
+//                 {dropdownItems[selectedFilter].map((item, index) => (
+//                   <TouchableOpacity
+//                     key={index}
+//                     style={[
+//                       styles.dropdownButton,
+//                       selectedSubItem === item ? { backgroundColor: colors.primary } : { backgroundColor: colors.card },
+//                     ]}
+//                     onPress={() => handleSubItemSelect(item)}
+//                     activeOpacity={0.7}
+//                     accessibilityLabel={`Select ${item}`}
+//                   >
+//                     <Text
+//                       style={[
+//                         styles.dropdownText,
+//                         selectedSubItem === item ? { color: '#FFFFFF' } : { color: colors.text },
+//                       ]}
+//                     >
+//                       {item}
+//                     </Text>
+//                   </TouchableOpacity>
+//                 ))}
+//               </View>
+//             </ScrollView>
+//           </View>
+//         )}
+//       </View>
+//       <ScrollView style={[styles.contentContainer, { backgroundColor: colors.background }]}>
+//         {project ? (
+//           <>
+//             {selectedSubItem && (
+//               <View style={styles.selectedSubItem}>
+//                 <Text style={styles.selectedSubItemText}>Selected: {selectedSubItem}</Text>
+//               </View>
+//             )}
+//             <Text style={styles.sectionTitle}>Project Overview</Text>
+//             <View style={styles.cardGrid}>
+//               {cardData.map((item, index) => (
+//                 <View
+//                   key={index}
+//                   style={[
+//                     styles.card,
+//                     { backgroundColor: colors.card, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 8, elevation: 4 },
+//                   ]}
+//                 >
+//                   <View style={[styles.cardHeader, { backgroundColor: item.gradient[0] }]}>
+//                     <View style={styles.cardHeaderContent}>
+//                       <Text style={styles.cardTitle}>{item.title}</Text>
+//                       {getTrendIndicator(item.trend)}
+//                     </View>
+//                     <View style={styles.cardContent}>
+//                       <View style={[styles.iconContainer, { backgroundColor: colors.card }]}>
+//                         <Icon name={cardIcons[item.title] || 'info'} size={24} color={colors.primary} />
+//                       </View>
+//                       <Text style={styles.cardValue}>{item.value}</Text>
+//                     </View>
+//                   </View>
+//                   <View style={styles.cardFooter}>
+//                     <Text style={styles.cardSubheading}>{item.subheading}</Text>
+//                   </View>
+//                 </View>
+//               ))}
+//             </View>
+//             <Text style={styles.sectionTitle}>Document Status</Text>
+//             <View style={[styles.chartContainer, { width: screenWidth - 48 }]}>
+//               <View style={styles.chartWrapper}>
+//                 <PieChart
+//                   data={pieData}
+//                   donut
+//                   innerRadius={innerRadius}
+//                   radius={pieRadius}
+//                   innerCircleColor={colors.card}
+//                   centerLabelComponent={() => (
+//                     <View style={styles.pieCenter}>
+//                       <Text style={styles.pieValue}>100</Text>
+//                       <Text style={styles.pieLabel}>Documents</Text>
+//                     </View>
+//                   )}
+//                   strokeWidth={4}
+//                   strokeColor={colors.card}
+//                   showText={false}
+//                   focusOnPress
+//                   showValuesAsLabels
+//                   labelsPosition="outward"
+//                   shadow
+//                   animationDuration={800}
+//                 />
+//               </View>
+//               <View style={styles.legendContainer}>
+//                 <View style={styles.legendItem}>
+//                   <View style={[styles.legendDot, { backgroundColor: colors.success }]} />
+//                   <Text style={styles.legendText}>Approved: 45%</Text>
+//                 </View>
+//                 <View style={styles.legendItem}>
+//                   <View style={[styles.legendDot, { backgroundColor: colors.warning }]} />
+//                   <Text style={styles.legendText}>Revision: 30%</Text>
+//                 </View>
+//                 <View style={styles.legendItem}>
+//                   <View style={[styles.legendDot, { backgroundColor: colors.info }]} />
+//                   <Text style={styles.legendText}>Review: 25%</Text>
+//                 </View>
+//               </View>
+//             </View>
+//             <Text style={styles.sectionTitle}>Progress Timeline</Text>
+//             <View style={[styles.chartContainer, { width: screenWidth - 48 }]}>
+//               <LineChart
+//                 data={lineData}
+//                 width={screenWidth - 80}
+//                 height={280}
+//                 curved
+//                 thickness={4}
+//                 color={colors.primary}
+//                 startFillColor={colors.primary}
+//                 endFillColor={colors.secondary}
+//                 startOpacity={0.9}
+//                 endOpacity={0.3}
+//                 areaChart
+//                 initialSpacing={0}
+//                 noOfSections={5}
+//                 rulesType="solid"
+//                 rulesColor="#E5E7EB"
+//                 yAxisThickness={0}
+//                 xAxisThickness={0}
+//                 showVerticalLines
+//                 verticalLinesColor="#E5E7EB"
+//                 dataPointsHeight={10}
+//                 dataPointsWidth={10}
+//                 dataPointsColor={colors.primary}
+//                 textColor={colors.text}
+//                 textSize={14}
+//                 showValuesAsDataPointsText
+//                 xAxisLabelTexts={labels}
+//                 xAxisLabelTextStyle={typography.xs}
+//                 yAxisTextStyle={typography.xs}
+//                 pointerConfig={{
+//                   pointerStripHeight: 180,
+//                   pointerStripColor: colors.subtext,
+//                   pointerStripWidth: 2,
+//                   pointerColor: colors.primary,
+//                   radius: 8,
+//                   pointerLabelWidth: 120,
+//                   pointerLabelHeight: 100,
+//                   activatePointersOnLongPress: true,
+//                   autoAdjustPointerLabelPosition: true,
+//                   pointerLabelComponent: (items) => {
+//                     const item = items[0];
+//                     return (
+//                       <View style={[styles.pointerLabel, { backgroundColor: colors.card }]}>
+//                         <Text style={styles.pointerLabelText}>{item.value}</Text>
+//                       </View>
+//                     );
+//                   },
+//                 }}
+//                 animationDuration={800}
+//               />
+//             </View>
+//           </>
+//         ) : (
+//           <Text style={styles.errorText}>Project not found.</Text>
+//         )}
+//       </ScrollView>
+//     </MainLayout>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   headerContainer: {
+//     paddingHorizontal: 16,
+//     paddingTop: 48,
+//     paddingBottom: 16,
+//   },
+//   filterScroll: {
+//     marginBottom: 16,
+//   },
+//   filterRow: {
+//     flexDirection: 'row',
+//   },
+//   filterButton: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     borderRadius: 9999,
+//     paddingVertical: 8,
+//     paddingHorizontal: 16,
+//     marginRight: 12,
+//   },
+//   filterText: {
+//     ...typography.md,
+//     marginRight: 8,
+//   },
+//   dropdownContainer: {
+//     backgroundColor: '#E0F2FE',
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     borderColor: '#BFDBFE',
+//     padding: 8,
+//   },
+//   dropdownRow: {
+//     flexDirection: 'row',
+//     paddingVertical: 8,
+//   },
+//   dropdownButton: {
+//     marginHorizontal: 8,
+//     paddingVertical: 8,
+//     paddingHorizontal: 16,
+//     borderRadius: 9999,
+//   },
+//   dropdownText: {
+//     ...typography.sm,
+//   },
+//   contentContainer: {
+//     flex: 1,
+//     paddingHorizontal: 16,
+//     paddingVertical: 24,
+//   },
+//   selectedSubItem: {
+//     marginBottom: 24,
+//     backgroundColor: '#E0F2FE',
+//     padding: 16,
+//     borderRadius: 8,
+//   },
+//   selectedSubItemText: {
+//     ...typography.md,
+//     color: colors.primary,
+//   },
+//   sectionTitle: {
+//     ...typography.xl,
+//     color: colors.text,
+//     marginBottom: 24,
+//   },
+//   cardGrid: {
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     justifyContent: 'space-between',
+//     marginBottom: 32,
+//   },
+//   card: {
+//     width: '48%',
+//     marginBottom: 16,
+//     borderRadius: 16,
+//     overflow: 'hidden',
+//   },
+//   cardHeader: {
+//     paddingHorizontal: 16,
+//     paddingVertical: 12,
+//   },
+//   cardHeaderContent: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'space-between',
+//     marginBottom: 12,
+//   },
+//   cardTitle: {
+//     ...typography.sm,
+//     color: colors.subtext,
+//   },
+//   cardContent: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'space-between',
+//   },
+//   iconContainer: {
+//     width: 40,
+//     height: 40,
+//     borderRadius: 12,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     opacity: 0.9,
+//   },
+//   cardValue: {
+//     ...typography.lg,
+//     color: colors.text,
+//     flex: 1,
+//     marginLeft: 12,
+//   },
+//   cardFooter: {
+//     paddingHorizontal: 16,
+//     paddingVertical: 12,
+//   },
+//   cardSubheading: {
+//     ...typography.xs,
+//     color: colors.subtext,
+//   },
+//   trendContainer: {
+//     padding: 6,
+//     borderRadius: 9999,
+//   },
+//   chartContainer: {
+//     backgroundColor: colors.card,
+//     borderRadius: 16,
+//     padding: 24,
+//     borderWidth: 1,
+//     borderColor: '#E5E7EB',
+//     marginBottom: 32,
+//   },
+//   chartWrapper: {
+//     alignItems: 'center',
+//   },
+//   pieCenter: {
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   pieValue: {
+//     ...typography.lg,
+//     color: colors.text,
+//     fontWeight: '800',
+//   },
+//   pieLabel: {
+//     ...typography.xs,
+//     color: colors.subtext,
+//   },
+//   legendContainer: {
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//     flexWrap: 'wrap',
+//     marginTop: 24,
+//   },
+//   legendItem: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     marginHorizontal: 12,
+//     marginBottom: 12,
+//     backgroundColor: '#F9FAFB',
+//     padding: 8,
+//     borderRadius: 8,
+//     shadowColor: '#000',
+//     shadowOffset: { width: 0, height: 1 },
+//     shadowOpacity: 0.05,
+//     shadowRadius: 4,
+//   },
+//   legendDot: {
+//     width: 16,
+//     height: 16,
+//     borderRadius: 9999,
+//     marginRight: 8,
+//   },
+//   legendText: {
+//     ...typography.sm,
+//     color: colors.text,
+//   },
+//   pointerLabel: {
+//     padding: 8,
+//     borderRadius: 8,
+//     shadowColor: '#000',
+//     shadowOffset: { width: 0, height: 2 },
+//     shadowOpacity: 0.1,
+//     shadowRadius: 4,
+//   },
+//   pointerLabelText: {
+//     ...typography.sm,
+//     color: colors.text,
+//   },
+//   errorText: {
+//     ...typography.md,
+//     color: colors.subtext,
+//   },
+// });
