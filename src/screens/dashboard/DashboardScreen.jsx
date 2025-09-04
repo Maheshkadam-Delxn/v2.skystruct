@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, Animated } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -218,36 +217,6 @@ export default function DashboardScreen() {
     ]).start();
   }, []);
 
-  const getTrendIndicator = (trend) => {
-    if (!trend) return null;
-    const trendConfig = {
-      up: { symbol: '↗️', color: colors.success, bg: '#ECFDF5', text: 'Increasing' },
-      down: { symbol: '↘️', color: colors.danger, bg: '#FEF2F2', text: 'Decreasing' },
-      stable: { symbol: '→', color: colors.textMuted, bg: '#F8FAFC', text: 'Stable' },
-      urgent: { symbol: '⚠️', color: colors.warning, bg: '#FFF7ED', text: 'Urgent' }
-    };
-    const config = trendConfig[trend];
-    return config ? (
-      <View 
-        style={{ 
-          backgroundColor: config.bg, 
-          paddingHorizontal: 8, 
-          paddingVertical: 4, 
-          borderRadius: 12,
-          ...shadows.small
-        }}
-      >
-        <Text style={{ 
-          color: config.color, 
-          fontSize: 11, 
-          fontWeight: '600' 
-        }}>
-          {config.symbol}
-        </Text>
-      </View>
-    ) : null;
-  };
-
   const handleFilterSelect = (filter) => {
     if (selectedFilter === filter) {
       setSelectedFilter(null);
@@ -422,14 +391,14 @@ export default function DashboardScreen() {
                     paddingHorizontal: 16,
                     paddingVertical: 10,
                     borderRadius: 20,
-                    backgroundColor: selectedSubItem === item ? colors.accent : colors.surface,
+                    backgroundColor: colors.surface,
                     ...shadows.small
                   }}
                   onPress={() => handleSubItemSelect(item)}
                 >
                   <Text style={{
-                    color: selectedSubItem === item ? 'white' : colors.text,
-                    fontWeight: selectedSubItem === item ? '600' : '500',
+                    color: colors.text,
+                    fontWeight: '500',
                     fontSize: 13
                   }}>
                     {item}
@@ -476,7 +445,6 @@ export default function DashboardScreen() {
             }}>
               {item.title}
             </Text>
-            {/* {getTrendIndicator(item.trend)} */}
           </View>
           <View style={{
             width: 44,
@@ -508,8 +476,6 @@ export default function DashboardScreen() {
         }}>
           {item.subheading}
         </Text>
-        
-     
       </LinearGradient>
     </Animated.View>
   );
@@ -729,29 +695,6 @@ export default function DashboardScreen() {
         <ProjectHeaderCard />
         <FilterSection />
         
-        {selectedSubItem && (
-          <Animated.View 
-            style={{ 
-              marginHorizontal: 24,
-              marginTop: 16,
-              backgroundColor: colors.accent,
-              padding: 20,
-              borderRadius: 16,
-              ...shadows.medium,
-              opacity: fadeAnim
-            }}
-          >
-            <Text style={{ 
-              fontSize: 18, 
-              fontWeight: '700', 
-              color: 'white',
-              textAlign: 'center'
-            }}>
-              Selected: {selectedSubItem}
-            </Text>
-          </Animated.View>
-        )}
-
         <View style={{ paddingHorizontal: 24, paddingTop: 32 }}>
           <Text style={{ 
             fontSize: 22, 
