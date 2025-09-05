@@ -1662,6 +1662,638 @@
 
 // export default ActivityScreen;
 
+
+
+
+// import React, { useState, useCallback, useMemo } from 'react';
+// import { 
+//   View, 
+//   Text, 
+//   ScrollView, 
+//   TouchableOpacity, 
+//   Dimensions, 
+//   ActivityIndicator,
+//   TextInput,
+//   Modal,
+// } from 'react-native';
+// import MainLayout from '../../../components/MainLayout';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Svg, { Circle, Defs, LinearGradient as SvgGradient, Stop } from 'react-native-svg';
+// import { LinearGradient } from 'expo-linear-gradient';
+// import Animated, { 
+//   FadeInDown, 
+//   FadeOut, 
+//   FadeInUp, 
+//   SlideInRight,
+//   SlideOutRight,
+// } from 'react-native-reanimated';
+
+// const screenWidth = Dimensions.get('window').width;
+// const cardWidth = Math.min(screenWidth - 32, 600);
+
+// const activities = [
+//   {
+//     id: '1',
+//     name: 'Granite Horizon',
+//     actNo: 'GH101-WBS-00001',
+//     progress: 65,
+//     startDate: '2025-06-07',
+//     endDate: '2025-06-16',
+//     duration: 10,
+//     status: 'In Progress',
+//     priority: 'High',
+//     assignedTo: 'Sonalika, Alan David',
+//     description: 'Primary construction phase for the granite horizon development',
+//     tags: ['Construction', 'Phase 1'],
+//     budget: '$125,000',
+//     subActivities: [
+//       { 
+//         id: '101', 
+//         name: 'Site Survey', 
+//         actNo: '1080', 
+//         progress: 100, 
+//         startDate: '2025-06-07', 
+//         endDate: '2025-06-16', 
+//         duration: 10, 
+//         status: 'Completed', 
+//         priority: 'Medium',
+//         assignedTo: 'Sonalika, Alan David',
+//         description: 'Complete site survey and mapping',
+//         budget: '$15,000'
+//       },
+//       { 
+//         id: '102', 
+//         name: 'Soil Testing', 
+//         actNo: '1170', 
+//         progress: 80, 
+//         startDate: '2025-07-08', 
+//         endDate: '2025-07-22', 
+//         duration: 15, 
+//         status: 'In Progress', 
+//         priority: 'High',
+//         assignedTo: 'Sonalika, Mukesh Sinha',
+//         description: 'Comprehensive soil analysis and testing',
+//         budget: '$25,000'
+//       },
+//       { 
+//         id: '103', 
+//         name: 'Foundation Work', 
+//         actNo: '1200', 
+//         progress: 45, 
+//         startDate: '2025-07-01', 
+//         endDate: '2025-07-30', 
+//         duration: 30, 
+//         status: 'In Progress', 
+//         priority: 'Critical',
+//         assignedTo: 'Mukesh Sinha',
+//         description: 'Foundation laying and structural work',
+//         budget: '$60,000'
+//       }
+//     ],
+//   },
+//   {
+//     id: '2',
+//     name: 'A Wing Construction',
+//     actNo: 'GH101-WBS-00002',
+//     progress: 30,
+//     startDate: '2025-07-23',
+//     endDate: '2025-08-01',
+//     duration: 10,
+//     status: 'Not Started',
+//     priority: 'Medium',
+//     assignedTo: 'Mukesh Sinha',
+//     description: 'Main building wing construction activities',
+//     tags: ['Building', 'Wing A'],
+//     budget: '$200,000',
+//     subActivities: [
+//       { 
+//         id: '201', 
+//         name: 'Site Preparation', 
+//         actNo: '1000', 
+//         progress: 30, 
+//         startDate: '2025-07-23', 
+//         endDate: '2025-08-01', 
+//         duration: 10, 
+//         status: 'Not Started', 
+//         priority: 'Medium',
+//         assignedTo: 'Mukesh Sinha',
+//         description: 'Site clearing and preparation work',
+//         budget: '$35,000'
+//       },
+//     ],
+//   },
+// ];
+
+// // Circular Progress with subtle gradient
+// const CircularProgress = React.memo(({ progress, size = 44, strokeWidth = 4 }) => {
+//   const radius = (size - strokeWidth) / 2;
+//   const circumference = 2 * Math.PI * radius;
+//   const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+//   const getProgressColor = (progress) => {
+//     if (progress >= 80) return '#22c55e'; // green
+//     if (progress >= 50) return '#eab308'; // yellow
+//     if (progress >= 20) return '#3b82f6'; // blue
+//     return '#ef4444'; // red
+//   };
+
+//   return (
+//     <View className="items-center justify-center">
+//       <Svg height={size} width={size}>
+//         <Defs>
+//           <SvgGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+//             <Stop offset="0%" stopColor={getProgressColor(progress)} stopOpacity="0.9" />
+//             <Stop offset="100%" stopColor={getProgressColor(progress)} stopOpacity="1" />
+//           </SvgGradient>
+//         </Defs>
+//         <Circle 
+//           cx={size / 2} 
+//           cy={size / 2} 
+//           r={radius} 
+//           stroke="#e5e7eb" 
+//           strokeWidth={strokeWidth} 
+//           fill="none" 
+//         />
+//         <Circle
+//           cx={size / 2}
+//           cy={size / 2}
+//           r={radius}
+//           stroke="url(#progressGradient)"
+//           strokeWidth={strokeWidth}
+//           fill="none"
+//           strokeDasharray={circumference}
+//           strokeDashoffset={strokeDashoffset}
+//           strokeLinecap="round"
+//           transform={`rotate(-90 ${size / 2} ${size / 2})`}
+//         />
+//       </Svg>
+//       <View className="absolute items-center">
+//         <Text className="text-xs font-semibold text-gray-700">{progress}%</Text>
+//       </View>
+//     </View>
+//   );
+// });
+
+// // Status Indicator with professional styling
+// const StatusIndicator = React.memo(({ status, priority }) => {
+//   const statusConfig = {
+//     'Not Started': { color: '#6b7280', bg: '#f3f4f6', icon: 'clock-outline' },
+//     'In Progress': { color: '#2563eb', bg: '#dbeafe', icon: 'progress-clock' },
+//     'Completed': { color: '#16a34a', bg: '#dcfce7', icon: 'check-circle' },
+//   };
+
+//   const priorityConfig = {
+//     'Low': { color: '#16a34a', border: '#16a34a' },
+//     'Medium': { color: '#d97706', border: '#d97706' },
+//     'High': { color: '#dc2626', border: '#dc2626' },
+//     'Critical': { color: '#991b1b', border: '#b91c1c' },
+//   };
+
+//   const config = statusConfig[status] || statusConfig['Not Started'];
+//   const priorityStyle = priorityConfig[priority] || priorityConfig['Medium'];
+
+//   return (
+//     <View className="items-end space-y-1">
+//       <View className="flex-row items-center px-2 py-1 rounded-md" style={{ backgroundColor: config.bg }}>
+//         <Icon name={config.icon} size={12} color={config.color} style={{ marginRight: 4 }} />
+//         <Text className="text-xs font-medium" style={{ color: config.color }}>{status}</Text>
+//       </View>
+//       <View 
+//         className="px-2 py-0.5 rounded-md border" 
+//         style={{ borderColor: priorityStyle.border, backgroundColor: `${priorityStyle.color}10` }}
+//       >
+//         <Text className="text-xs font-medium" style={{ color: priorityStyle.color }}>{priority}</Text>
+//       </View>
+//     </View>
+//   );
+// });
+
+// // Activity Card with professional light blue styling
+// const ActivityCard = React.memo(({ item, level = 0, toggleExpand, isExpanded }) => {
+//   const [showDetails, setShowDetails] = useState(false);
+
+//   return (
+//     <Animated.View entering={FadeInDown.delay(level * 100)} exiting={FadeOut}>
+//       <TouchableOpacity
+//         onPress={() => toggleExpand(item.id)}
+//         className={`rounded-xl shadow-md mb-4 overflow-hidden ${
+//           level === 0 ? 'bg-white' : 'bg-gray-50'
+//         }`}
+//         style={{ 
+//           width: cardWidth,
+//           elevation: level === 0 ? 6 : 3,
+//           shadowColor: '#000',
+//           shadowOffset: { width: 0, height: level === 0 ? 3 : 1 },
+//           shadowOpacity: level === 0 ? 0.08 : 0.04,
+//           shadowRadius: level === 0 ? 6 : 3,
+//         }}
+//       >
+//         {/* Header with subtle gradient */}
+//         <LinearGradient
+//           colors={level === 0 ? ['#eff6ff', '#dbeafe'] : ['#f3f4f6', '#e5e7eb']}
+//           start={{ x: 0, y: 0 }}
+//           end={{ x: 1, y: 1 }}
+//           className="p-4"
+//         >
+//           <View className="flex-row justify-between items-center">
+//             <View className="flex-row items-center flex-1">
+//               <Icon
+//                 name={isExpanded ? 'chevron-down' : 'chevron-right'}
+//                 size={20}
+//                 color="#1e3a8a"
+//                 style={{ marginRight: 12 }}
+//               />
+//               <View className="flex-1">
+//                 <Text className="text-base font-semibold text-gray-900">{item.name}</Text>
+//                 <Text className="text-xs text-gray-600 mt-1">{item.actNo}</Text>
+//                 {item.tags && (
+//                   <View className="flex-row mt-2">
+//                     {item.tags.map((tag, index) => (
+//                       <View key={index} className="bg-blue-100 px-2 py-0.5 rounded-md mr-2">
+//                         <Text className="text-xs text-blue-700 font-medium">{tag}</Text>
+//                       </View>
+//                     ))}
+//                   </View>
+//                 )}
+//               </View>
+//             </View>
+//             <CircularProgress progress={item.progress} size={44} strokeWidth={4} />
+//           </View>
+//         </LinearGradient>
+
+//         {/* Content */}
+//         <View className="p-4 space-y-3">
+//           {/* Key Info Row */}
+//           <View className="flex-row justify-between items-center">
+//             <View className="flex-1">
+//               <Text className="text-xs text-gray-500 mb-1">Duration</Text>
+//               <View className="flex-row items-center">
+//                 <Icon name="calendar-range" size={16} color="#6b7280" />
+//                 <Text className="text-sm font-medium text-gray-700 ml-2">{item.duration} days</Text>
+//               </View>
+//             </View>
+//             <View className="flex-1">
+//               <Text className="text-xs text-gray-500 mb-1">Budget</Text>
+//               <View className="flex-row items-center">
+//                 <Icon name="currency-usd" size={16} color="#6b7280" />
+//                 <Text className="text-sm font-medium text-gray-700 ml-2">{item.budget || 'N/A'}</Text>
+//               </View>
+//             </View>
+//             <StatusIndicator status={item.status} priority={item.priority} />
+//           </View>
+
+//           {/* Dates */}
+//           <View className="bg-gray-50 rounded-lg p-3">
+//             <View className="flex-row justify-between">
+//               <View className="flex-1">
+//                 <Text className="text-xs text-gray-500 mb-1">Start Date</Text>
+//                 <Text className="text-sm font-medium text-gray-700">{item.startDate}</Text>
+//               </View>
+//               <View className="flex-1 items-end">
+//                 <Text className="text-xs text-gray-500 mb-1">End Date</Text>
+//                 <Text className="text-sm font-medium text-gray-700">{item.endDate}</Text>
+//               </View>
+//             </View>
+//           </View>
+
+//           {/* Assigned To */}
+//           <View className="flex-row items-center">
+//             <Icon name="account-group" size={16} color="#6b7280" />
+//             <Text className="text-sm text-gray-600 ml-2">Assigned to: </Text>
+//             <Text className="text-sm font-medium text-gray-700">{item.assignedTo}</Text>
+//           </View>
+
+//           {/* Description */}
+//           {item.description && (
+//             <View className="bg-blue-50 rounded-lg p-3">
+//               <Text className="text-sm text-gray-600">{item.description}</Text>
+//             </View>
+//           )}
+
+//           {/* Action Buttons */}
+//           <View className="flex-row justify-end space-x-2 pt-2 border-t border-gray-100">
+//             <TouchableOpacity
+//               className="bg-blue-50 px-4 py-2 rounded-md flex-row items-center"
+//               onPress={() => setShowDetails(!showDetails)}
+//             >
+//               <Icon name="information-outline" size={16} color="#2563eb" />
+//               <Text className="text-blue-700 font-medium ml-2">Details</Text>
+//             </TouchableOpacity>
+//             <TouchableOpacity
+//               className="bg-blue-50 px-4 py-2 rounded-md flex-row items-center"
+//               onPress={() => console.log('Edit', item.id)}
+//             >
+//               <Icon name="pencil-outline" size={16} color="#2563eb" />
+//               <Text className="text-blue-700 font-medium ml-2">Edit</Text>
+//             </TouchableOpacity>
+//           </View>
+
+//           {/* Expanded Details */}
+//           {showDetails && (
+//             <Animated.View entering={FadeInUp} className="bg-gray-50 rounded-lg p-3 mt-2">
+//               <Text className="text-sm font-semibold text-gray-800 mb-2">Additional Details</Text>
+//               <View className="space-y-1">
+//                 <Text className="text-xs text-gray-600">Activity ID: {item.id}</Text>
+//                 <Text className="text-xs text-gray-600">Priority Level: {item.priority}</Text>
+//                 <Text className="text-xs text-gray-600">Progress: {item.progress}% Complete</Text>
+//               </View>
+//             </Animated.View>
+//           )}
+//         </View>
+//       </TouchableOpacity>
+
+//       {/* Sub-activities */}
+//       {isExpanded && Array.isArray(item.subActivities) && item.subActivities.length > 0 && (
+//         <Animated.View entering={SlideInRight} exiting={SlideOutRight} className="ml-6 mt-2">
+//           {item.subActivities.map((subItem, index) => (
+//             <ActivityCard
+//               key={subItem.id}
+//               item={subItem}
+//               level={level + 1}
+//               toggleExpand={() => {}}
+//               isExpanded={false}
+//             />
+//           ))}
+//         </Animated.View>
+//       )}
+//     </Animated.View>
+//   );
+// });
+
+// // Filter Modal with professional styling
+// const FilterModal = ({ visible, onClose, currentFilter, onApplyFilter }) => {
+//   const [tempFilter, setTempFilter] = useState(currentFilter);
+
+//   return (
+//     <Modal visible={visible} animationType="slide" transparent>
+//       <View className="flex-1 bg-black/30 justify-end">
+//         <Animated.View entering={SlideInRight} className="bg-white rounded-t-2xl p-6">
+//           <View className="flex-row justify-between items-center mb-4">
+//             <Text className="text-lg font-semibold text-gray-900">Filter Activities</Text>
+//             <TouchableOpacity onPress={onClose}>
+//               <Icon name="close" size={20} color="#6b7280" />
+//             </TouchableOpacity>
+//           </View>
+          
+//           <View className="space-y-3">
+//             <Text className="text-base font-medium text-gray-800">Status</Text>
+//             {['All', 'Not Started', 'In Progress', 'Completed'].map((status) => (
+//               <TouchableOpacity
+//                 key={status}
+//                 className={`p-3 rounded-lg border ${
+//                   tempFilter === status || (status === 'All' && !tempFilter)
+//                     ? 'border-blue-500 bg-blue-50' 
+//                     : 'border-gray-200'
+//                 }`}
+//                 onPress={() => setTempFilter(status === 'All' ? null : status)}
+//               >
+//                 <Text className={`font-medium ${
+//                   tempFilter === status || (status === 'All' && !tempFilter)
+//                     ? 'text-blue-600' 
+//                     : 'text-gray-700'
+//                 }`}>
+//                   {status}
+//                 </Text>
+//               </TouchableOpacity>
+//             ))}
+//           </View>
+          
+//           <View className="flex-row space-x-3 mt-6">
+//             <TouchableOpacity
+//               className="flex-1 bg-gray-100 p-3 rounded-lg"
+//               onPress={onClose}
+//             >
+//               <Text className="text-center font-medium text-gray-700">Cancel</Text>
+//             </TouchableOpacity>
+//             <TouchableOpacity
+//               className="flex-1 bg-blue-500 p-3 rounded-lg"
+//               onPress={() => {
+//                 onApplyFilter(tempFilter);
+//                 onClose();
+//               }}
+//             >
+//               <Text className="text-center font-medium text-white">Apply Filter</Text>
+//             </TouchableOpacity>
+//           </View>
+//         </Animated.View>
+//       </View>
+//     </Modal>
+//   );
+// };
+
+// // Main Activity Screen Component
+// const ActivityScreen = () => {
+//   const [expandedItems, setExpandedItems] = useState({ '1': true });
+//   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
+//   const [filterStatus, setFilterStatus] = useState(null);
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [showFilterModal, setShowFilterModal] = useState(false);
+
+//   const toggleExpand = useCallback((id) => {
+//     setExpandedItems(prev => ({ ...prev, [id]: !prev[id] }));
+//   }, []);
+
+//   const handleSort = useCallback((key) => {
+//     setSortConfig(prev => ({
+//       key,
+//       direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+//     }));
+//   }, []);
+
+//   const handleRefresh = useCallback(() => {
+//     setIsLoading(true);
+//     setTimeout(() => setIsLoading(false), 1500);
+//   }, []);
+
+//   const sortedAndFilteredActivities = useMemo(() => {
+//     let result = [...activities];
+    
+//     // Apply search filter
+//     if (searchQuery.trim()) {
+//       result = result.filter(item => 
+//         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+//         item.actNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+//         item.assignedTo.toLowerCase().includes(searchQuery.toLowerCase())
+//       );
+//     }
+    
+//     // Apply status filter
+//     if (filterStatus) {
+//       result = result.filter(item => item.status === filterStatus);
+//     }
+    
+//     // Apply sorting
+//     return result.sort((a, b) => {
+//       const aValue = a[sortConfig.key] || '';
+//       const bValue = b[sortConfig.key] || '';
+//       if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+//       if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+//       return 0;
+//     });
+//   }, [sortConfig, filterStatus, searchQuery]);
+
+//   if (isLoading) {
+//     return (
+//       <MainLayout title="Activity">
+//         <View className="flex-1 justify-center items-center bg-gray-50">
+//           <View className="bg-white p-6 rounded-2xl shadow-md items-center">
+//             <ActivityIndicator size="large" color="#2563eb" />
+//             <Text className="mt-3 text-base font-medium text-gray-700">Loading activities...</Text>
+//           </View>
+//         </View>
+//       </MainLayout>
+//     );
+//   }
+
+//   return (
+//     <MainLayout title="Activity">
+//       <View className="flex-1 bg-gray-50">
+//         {/* Header with subtle gradient */}
+//         <LinearGradient 
+//           colors={['#eff6ff', '#dbeafe']} 
+//           start={{ x: 0, y: 0 }}
+//           end={{ x: 1, y: 1 }}
+//           className="px-4 pt-4 pb-6"
+//         >
+//           <View className="flex-row justify-between items-center mb-4">
+//             <View>
+//               <Text className="text-xl font-semibold text-gray-900">Project Activities</Text>
+//               <Text className="text-xs text-gray-600 mt-1">
+//                 {sortedAndFilteredActivities.length} activities • {filterStatus || 'All statuses'}
+//               </Text>
+//             </View>
+//             <View className="flex-row space-x-2">
+//               <TouchableOpacity
+//                 className="p-2 bg-blue-50 rounded-md"
+//                 onPress={handleRefresh}
+//               >
+//                 <Icon name="refresh" size={18} color="#2563eb" />
+//               </TouchableOpacity>
+//               <TouchableOpacity
+//                 className="p-2 bg-blue-50 rounded-md"
+//                 onPress={() => console.log('Add activity')}
+//               >
+//                 <Icon name="plus" size={18} color="#2563eb" />
+//               </TouchableOpacity>
+//             </View>
+//           </View>
+
+//           {/* Search Bar */}
+//           <View className="bg-white rounded-lg px-4 py-2 mb-4 shadow-sm">
+//             <View className="flex-row items-center">
+//               <Icon name="magnify" size={18} color="#6b7280" style={{ marginRight: 8 }} />
+//               <TextInput
+//                 value={searchQuery}
+//                 onChangeText={setSearchQuery}
+//                 placeholder="Search activities, IDs, or assignees..."
+//                 placeholderTextColor="#9ca3af"
+//                 className="flex-1 text-gray-700 text-sm"
+//               />
+//               {searchQuery.length > 0 && (
+//                 <TouchableOpacity onPress={() => setSearchQuery('')}>
+//                   <Icon name="close-circle" size={18} color="#9ca3af" />
+//                 </TouchableOpacity>
+//               )}
+//             </View>
+//           </View>
+
+//           {/* Filter and Sort Controls */}
+//           <View className="flex-row justify-between">
+//             <TouchableOpacity
+//               className="flex-row items-center bg-blue-50 px-3 py-2 rounded-md"
+//               onPress={() => setShowFilterModal(true)}
+//             >
+//               <Icon name="filter-outline" size={16} color="#2563eb" />
+//               <Text className="text-blue-700 font-medium ml-2 text-sm">Filter</Text>
+//               {filterStatus && (
+//                 <View className="ml-2 bg-blue-100 px-2 py-0.5 rounded-md">
+//                   <Text className="text-xs text-blue-700">{filterStatus}</Text>
+//                 </View>
+//               )}
+//             </TouchableOpacity>
+
+//             <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
+//               {[
+//                 { key: 'name', label: 'Name' },
+//                 { key: 'progress', label: 'Progress' },
+//                 { key: 'status', label: 'Status' },
+//                 { key: 'priority', label: 'Priority' }
+//               ].map(({ key, label }) => (
+//                 <TouchableOpacity
+//                   key={key}
+//                   onPress={() => handleSort(key)}
+//                   className={`flex-row items-center px-3 py-2 rounded-md mr-2 ${
+//                     sortConfig.key === key ? 'bg-blue-100' : 'bg-blue-50'
+//                   }`}
+//                 >
+//                   <Text className="text-blue-700 font-medium text-sm">{label}</Text>
+//                   {sortConfig.key === key && (
+//                     <Icon
+//                       name={sortConfig.direction === 'asc' ? 'arrow-up' : 'arrow-down'}
+//                       size={14}
+//                       color="#2563eb"
+//                       style={{ marginLeft: 4 }}
+//                     />
+//                   )}
+//                 </TouchableOpacity>
+//               ))}
+//             </ScrollView>
+//           </View>
+//         </LinearGradient>
+
+//         {/* Activities List */}
+//         <ScrollView 
+//           contentContainerStyle={{ padding: 16 }}
+//           showsVerticalScrollIndicator={false}
+//         >
+//           {sortedAndFilteredActivities.length > 0 ? (
+//             sortedAndFilteredActivities.map((item, index) => (
+//               <ActivityCard
+//                 key={item.id}
+//                 item={item}
+//                 level={0}
+//                 toggleExpand={toggleExpand}
+//                 isExpanded={expandedItems[item.id]}
+//               />
+//             ))
+//           ) : (
+//             <Animated.View 
+//               entering={FadeInUp} 
+//               className="items-center justify-center py-12 bg-white rounded-2xl shadow-md"
+//             >
+//               <Icon name="folder-search-outline" size={48} color="#d1d5db" />
+//               <Text className="text-base font-medium text-gray-600 mt-3">No activities found</Text>
+//               <Text className="text-xs text-gray-500 mt-2 text-center px-8">
+//                 {searchQuery ? 
+//                   'Try adjusting your search terms or filters' : 
+//                   'Get started by creating your first activity'
+//                 }
+//               </Text>
+//               <TouchableOpacity 
+//                 className="bg-blue-500 px-6 py-2 rounded-md mt-4"
+//                 onPress={() => console.log('Add first activity')}
+//               >
+//                 <Text className="text-white font-medium text-sm">Add Activity</Text>
+//               </TouchableOpacity>
+//             </Animated.View>
+//           )}
+//         </ScrollView>
+
+//         {/* Filter Modal */}
+//         <FilterModal
+//           visible={showFilterModal}
+//           onClose={() => setShowFilterModal(false)}
+//           currentFilter={filterStatus}
+//           onApplyFilter={setFilterStatus}
+//         />
+//       </View>
+//     </MainLayout>
+//   );
+// };
+
+// export default ActivityScreen;
+
 import React, { useState, useCallback, useMemo } from 'react';
 import { 
   View, 
@@ -1671,18 +2303,16 @@ import {
   Dimensions, 
   ActivityIndicator,
   TextInput,
-  Modal,
+  Modal
 } from 'react-native';
 import MainLayout from '../../../components/MainLayout';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Svg, { Circle, Defs, LinearGradient as SvgGradient, Stop } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { 
   FadeInDown, 
   FadeOut, 
-  FadeInUp, 
-  SlideInRight,
-  SlideOutRight,
+  FadeInUp,
+  SlideInRight
 } from 'react-native-reanimated';
 
 const screenWidth = Dimensions.get('window').width;
@@ -1731,20 +2361,6 @@ const activities = [
         assignedTo: 'Sonalika, Mukesh Sinha',
         description: 'Comprehensive soil analysis and testing',
         budget: '$25,000'
-      },
-      { 
-        id: '103', 
-        name: 'Foundation Work', 
-        actNo: '1200', 
-        progress: 45, 
-        startDate: '2025-07-01', 
-        endDate: '2025-07-30', 
-        duration: 30, 
-        status: 'In Progress', 
-        priority: 'Critical',
-        assignedTo: 'Mukesh Sinha',
-        description: 'Foundation laying and structural work',
-        budget: '$60,000'
       }
     ],
   },
@@ -1781,218 +2397,354 @@ const activities = [
   },
 ];
 
-// Circular Progress with subtle gradient
-const CircularProgress = React.memo(({ progress, size = 44, strokeWidth = 4 }) => {
+// Circular Progress Component
+const CircularProgress = ({ progress, size = 44, strokeWidth = 4 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   const getProgressColor = (progress) => {
-    if (progress >= 80) return '#22c55e'; // green
-    if (progress >= 50) return '#eab308'; // yellow
-    if (progress >= 20) return '#3b82f6'; // blue
-    return '#ef4444'; // red
+    if (progress >= 80) return '#10b981';
+    if (progress >= 50) return '#f59e0b';
+    if (progress >= 20) return '#3b82f6';
+    return '#ef4444';
   };
 
   return (
-    <View className="items-center justify-center">
-      <Svg height={size} width={size}>
-        <Defs>
-          <SvgGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <Stop offset="0%" stopColor={getProgressColor(progress)} stopOpacity="0.9" />
-            <Stop offset="100%" stopColor={getProgressColor(progress)} stopOpacity="1" />
-          </SvgGradient>
-        </Defs>
-        <Circle 
-          cx={size / 2} 
-          cy={size / 2} 
-          r={radius} 
-          stroke="#e5e7eb" 
-          strokeWidth={strokeWidth} 
-          fill="none" 
-        />
-        <Circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="url(#progressGradient)"
-          strokeWidth={strokeWidth}
-          fill="none"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        />
-      </Svg>
-      <View className="absolute items-center">
-        <Text className="text-xs font-semibold text-gray-700">{progress}%</Text>
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        backgroundColor: '#f8fafc',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: strokeWidth,
+        borderColor: '#e5e7eb'
+      }}>
+        <View style={{
+          width: size - strokeWidth * 2,
+          height: size - strokeWidth * 2,
+          borderRadius: (size - strokeWidth * 2) / 2,
+          backgroundColor: getProgressColor(progress) + '20',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <Text style={{ 
+            fontSize: 12, 
+            fontWeight: '700', 
+            color: getProgressColor(progress) 
+          }}>
+            {progress}%
+          </Text>
+        </View>
       </View>
     </View>
   );
-});
+};
 
-// Status Indicator with professional styling
-const StatusIndicator = React.memo(({ status, priority }) => {
+// Status Indicator Component
+const StatusIndicator = ({ status, priority }) => {
   const statusConfig = {
     'Not Started': { color: '#6b7280', bg: '#f3f4f6', icon: 'clock-outline' },
-    'In Progress': { color: '#2563eb', bg: '#dbeafe', icon: 'progress-clock' },
-    'Completed': { color: '#16a34a', bg: '#dcfce7', icon: 'check-circle' },
+    'In Progress': { color: '#f59e0b', bg: '#fef3c7', icon: 'progress-clock' },
+    'Completed': { color: '#10b981', bg: '#d1fae5', icon: 'check-circle' },
   };
 
   const priorityConfig = {
-    'Low': { color: '#16a34a', border: '#16a34a' },
-    'Medium': { color: '#d97706', border: '#d97706' },
-    'High': { color: '#dc2626', border: '#dc2626' },
-    'Critical': { color: '#991b1b', border: '#b91c1c' },
+    'Low': { color: '#10b981' },
+    'Medium': { color: '#f59e0b' },
+    'High': { color: '#ef4444' },
+    'Critical': { color: '#dc2626' },
   };
 
   const config = statusConfig[status] || statusConfig['Not Started'];
   const priorityStyle = priorityConfig[priority] || priorityConfig['Medium'];
 
   return (
-    <View className="items-end space-y-1">
-      <View className="flex-row items-center px-2 py-1 rounded-md" style={{ backgroundColor: config.bg }}>
-        <Icon name={config.icon} size={12} color={config.color} style={{ marginRight: 4 }} />
-        <Text className="text-xs font-medium" style={{ color: config.color }}>{status}</Text>
+    <View style={{ alignItems: 'flex-end', gap: 4 }}>
+      <View style={{ 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 16,
+        backgroundColor: config.bg 
+      }}>
+        <Icon name={config.icon} size={14} color={config.color} style={{ marginRight: 4 }} />
+        <Text style={{ 
+          fontSize: 12, 
+          fontWeight: '600', 
+          color: config.color 
+        }}>
+          {status}
+        </Text>
       </View>
-      <View 
-        className="px-2 py-0.5 rounded-md border" 
-        style={{ borderColor: priorityStyle.border, backgroundColor: `${priorityStyle.color}10` }}
-      >
-        <Text className="text-xs font-medium" style={{ color: priorityStyle.color }}>{priority}</Text>
+      <View style={{ 
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 12,
+        backgroundColor: priorityStyle.color + '10'
+      }}>
+        <Text style={{ 
+          fontSize: 11, 
+          fontWeight: '600', 
+          color: priorityStyle.color 
+        }}>
+          {priority}
+        </Text>
       </View>
     </View>
   );
-});
+};
 
-// Activity Card with professional light blue styling
-const ActivityCard = React.memo(({ item, level = 0, toggleExpand, isExpanded }) => {
+// Activity Card Component
+const ActivityCard = ({ item, level = 0, toggleExpand, isExpanded }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <Animated.View entering={FadeInDown.delay(level * 100)} exiting={FadeOut}>
+    <Animated.View entering={FadeInDown.delay(level * 100)}>
       <TouchableOpacity
         onPress={() => toggleExpand(item.id)}
-        className={`rounded-xl shadow-md mb-4 overflow-hidden ${
-          level === 0 ? 'bg-white' : 'bg-gray-50'
-        }`}
-        style={{ 
-          width: cardWidth,
-          elevation: level === 0 ? 6 : 3,
+        style={{
+          borderRadius: 20,
+          backgroundColor: level === 0 ? '#ffffff' : '#f8fafc',
+          marginBottom: 16,
+          overflow: 'hidden',
           shadowColor: '#000',
-          shadowOffset: { width: 0, height: level === 0 ? 3 : 1 },
-          shadowOpacity: level === 0 ? 0.08 : 0.04,
-          shadowRadius: level === 0 ? 6 : 3,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: level === 0 ? 0.1 : 0.05,
+          shadowRadius: level === 0 ? 8 : 4,
+          elevation: level === 0 ? 4 : 2,
         }}
       >
-        {/* Header with subtle gradient */}
+        {/* Header */}
         <LinearGradient
-          colors={level === 0 ? ['#eff6ff', '#dbeafe'] : ['#f3f4f6', '#e5e7eb']}
+          colors={level === 0 ? ['#3b82f6', '#2563eb'] : ['#6b7280', '#4b5563']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          className="p-4"
+          style={{ padding: 20 }}
         >
-          <View className="flex-row justify-between items-center">
-            <View className="flex-row items-center flex-1">
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
               <Icon
                 name={isExpanded ? 'chevron-down' : 'chevron-right'}
-                size={20}
-                color="#1e3a8a"
+                size={24}
+                color="#ffffff"
                 style={{ marginRight: 12 }}
               />
-              <View className="flex-1">
-                <Text className="text-base font-semibold text-gray-900">{item.name}</Text>
-                <Text className="text-xs text-gray-600 mt-1">{item.actNo}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={{ 
+                  fontSize: 18, 
+                  fontWeight: '700', 
+                  color: '#ffffff',
+                  marginBottom: 4
+                }}>
+                  {item.name}
+                </Text>
+                <Text style={{ 
+                  fontSize: 13, 
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  marginBottom: 8
+                }}>
+                  {item.actNo}
+                </Text>
                 {item.tags && (
-                  <View className="flex-row mt-2">
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}>
                     {item.tags.map((tag, index) => (
-                      <View key={index} className="bg-blue-100 px-2 py-0.5 rounded-md mr-2">
-                        <Text className="text-xs text-blue-700 font-medium">{tag}</Text>
+                      <View key={index} style={{ 
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)', 
+                        paddingHorizontal: 8,
+                        paddingVertical: 4,
+                        borderRadius: 12
+                      }}>
+                        <Text style={{ 
+                          fontSize: 11, 
+                          color: '#ffffff',
+                          fontWeight: '500'
+                        }}>
+                          {tag}
+                        </Text>
                       </View>
                     ))}
                   </View>
                 )}
               </View>
             </View>
-            <CircularProgress progress={item.progress} size={44} strokeWidth={4} />
+            <CircularProgress progress={item.progress} size={50} strokeWidth={5} />
           </View>
         </LinearGradient>
 
         {/* Content */}
-        <View className="p-4 space-y-3">
-          {/* Key Info Row */}
-          <View className="flex-row justify-between items-center">
-            <View className="flex-1">
-              <Text className="text-xs text-gray-500 mb-1">Duration</Text>
-              <View className="flex-row items-center">
+        <View style={{ padding: 20, gap: 16 }}>
+          {/* Key Info */}
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ flex: 1, gap: 4 }}>
+              <Text style={{ fontSize: 12, color: '#6b7280' }}>Duration</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon name="calendar-range" size={16} color="#6b7280" />
-                <Text className="text-sm font-medium text-gray-700 ml-2">{item.duration} days</Text>
+                <Text style={{ 
+                  fontSize: 14, 
+                  fontWeight: '600', 
+                  color: '#374151',
+                  marginLeft: 8
+                }}>
+                  {item.duration} days
+                </Text>
               </View>
             </View>
-            <View className="flex-1">
-              <Text className="text-xs text-gray-500 mb-1">Budget</Text>
-              <View className="flex-row items-center">
+            <View style={{ flex: 1, gap: 4 }}>
+              <Text style={{ fontSize: 12, color: '#6b7280' }}>Budget</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Icon name="currency-usd" size={16} color="#6b7280" />
-                <Text className="text-sm font-medium text-gray-700 ml-2">{item.budget || 'N/A'}</Text>
+                <Text style={{ 
+                  fontSize: 14, 
+                  fontWeight: '600', 
+                  color: '#374151',
+                  marginLeft: 8
+                }}>
+                  {item.budget || 'N/A'}
+                </Text>
               </View>
             </View>
             <StatusIndicator status={item.status} priority={item.priority} />
           </View>
 
           {/* Dates */}
-          <View className="bg-gray-50 rounded-lg p-3">
-            <View className="flex-row justify-between">
-              <View className="flex-1">
-                <Text className="text-xs text-gray-500 mb-1">Start Date</Text>
-                <Text className="text-sm font-medium text-gray-700">{item.startDate}</Text>
-              </View>
-              <View className="flex-1 items-end">
-                <Text className="text-xs text-gray-500 mb-1">End Date</Text>
-                <Text className="text-sm font-medium text-gray-700">{item.endDate}</Text>
-              </View>
+          <View style={{ 
+            backgroundColor: '#f8fafc', 
+            borderRadius: 16, 
+            padding: 16,
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+          }}>
+            <View style={{ gap: 4 }}>
+              <Text style={{ fontSize: 12, color: '#6b7280' }}>Start Date</Text>
+              <Text style={{ fontSize: 14, fontWeight: '600', color: '#374151' }}>
+                {item.startDate}
+              </Text>
+            </View>
+            <View style={{ alignItems: 'flex-end', gap: 4 }}>
+              <Text style={{ fontSize: 12, color: '#6b7280' }}>End Date</Text>
+              <Text style={{ fontSize: 14, fontWeight: '600', color: '#374151' }}>
+                {item.endDate}
+              </Text>
             </View>
           </View>
 
           {/* Assigned To */}
-          <View className="flex-row items-center">
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon name="account-group" size={16} color="#6b7280" />
-            <Text className="text-sm text-gray-600 ml-2">Assigned to: </Text>
-            <Text className="text-sm font-medium text-gray-700">{item.assignedTo}</Text>
+            <Text style={{ 
+              fontSize: 14, 
+              color: '#6b7280',
+              marginLeft: 8
+            }}>
+              Assigned to:{' '}
+            </Text>
+            <Text style={{ 
+              fontSize: 14, 
+              fontWeight: '600', 
+              color: '#374151'
+            }}>
+              {item.assignedTo}
+            </Text>
           </View>
 
           {/* Description */}
           {item.description && (
-            <View className="bg-blue-50 rounded-lg p-3">
-              <Text className="text-sm text-gray-600">{item.description}</Text>
+            <View style={{ 
+              backgroundColor: '#eff6ff', 
+              borderRadius: 16, 
+              padding: 16
+            }}>
+              <Text style={{ 
+                fontSize: 14, 
+                color: '#374151',
+                lineHeight: 20
+              }}>
+                {item.description}
+              </Text>
             </View>
           )}
 
           {/* Action Buttons */}
-          <View className="flex-row justify-end space-x-2 pt-2 border-t border-gray-100">
+          <View style={{ 
+            flexDirection: 'row', 
+            justifyContent: 'flex-end', 
+            gap: 12,
+            paddingTop: 16,
+            borderTopWidth: 1,
+            borderTopColor: '#f3f4f6'
+          }}>
             <TouchableOpacity
-              className="bg-blue-50 px-4 py-2 rounded-md flex-row items-center"
+              style={{ 
+                flexDirection: 'row', 
+                alignItems: 'center',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                backgroundColor: '#eff6ff',
+                borderRadius: 12
+              }}
               onPress={() => setShowDetails(!showDetails)}
             >
               <Icon name="information-outline" size={16} color="#2563eb" />
-              <Text className="text-blue-700 font-medium ml-2">Details</Text>
+              <Text style={{ 
+                color: '#2563eb', 
+                fontWeight: '600',
+                marginLeft: 8
+              }}>
+                Details
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className="bg-blue-50 px-4 py-2 rounded-md flex-row items-center"
+              style={{ 
+                flexDirection: 'row', 
+                alignItems: 'center',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                backgroundColor: '#ecfdf5',
+                borderRadius: 12
+              }}
               onPress={() => console.log('Edit', item.id)}
             >
-              <Icon name="pencil-outline" size={16} color="#2563eb" />
-              <Text className="text-blue-700 font-medium ml-2">Edit</Text>
+              <Icon name="pencil-outline" size={16} color="#059669" />
+              <Text style={{ 
+                color: '#059669', 
+                fontWeight: '600',
+                marginLeft: 8
+              }}>
+                Edit
+              </Text>
             </TouchableOpacity>
           </View>
 
           {/* Expanded Details */}
           {showDetails && (
-            <Animated.View entering={FadeInUp} className="bg-gray-50 rounded-lg p-3 mt-2">
-              <Text className="text-sm font-semibold text-gray-800 mb-2">Additional Details</Text>
-              <View className="space-y-1">
-                <Text className="text-xs text-gray-600">Activity ID: {item.id}</Text>
-                <Text className="text-xs text-gray-600">Priority Level: {item.priority}</Text>
-                <Text className="text-xs text-gray-600">Progress: {item.progress}% Complete</Text>
+            <Animated.View entering={FadeInUp} style={{ 
+              backgroundColor: '#f8fafc', 
+              borderRadius: 16, 
+              padding: 16,
+              marginTop: 8
+            }}>
+              <Text style={{ 
+                fontSize: 14, 
+                fontWeight: '600', 
+                color: '#374151',
+                marginBottom: 8
+              }}>
+                Additional Details
+              </Text>
+              <View style={{ gap: 4 }}>
+                <Text style={{ fontSize: 12, color: '#6b7280' }}>
+                  Activity ID: {item.id}
+                </Text>
+                <Text style={{ fontSize: 12, color: '#6b7280' }}>
+                  Priority Level: {item.priority}
+                </Text>
+                <Text style={{ fontSize: 12, color: '#6b7280' }}>
+                  Progress: {item.progress}% Complete
+                </Text>
               </View>
             </Animated.View>
           )}
@@ -2000,9 +2752,9 @@ const ActivityCard = React.memo(({ item, level = 0, toggleExpand, isExpanded }) 
       </TouchableOpacity>
 
       {/* Sub-activities */}
-      {isExpanded && Array.isArray(item.subActivities) && item.subActivities.length > 0 && (
-        <Animated.View entering={SlideInRight} exiting={SlideOutRight} className="ml-6 mt-2">
-          {item.subActivities.map((subItem, index) => (
+      {isExpanded && item.subActivities && item.subActivities.length > 0 && (
+        <Animated.View entering={SlideInRight} style={{ marginLeft: 24, marginTop: -8 }}>
+          {item.subActivities.map((subItem) => (
             <ActivityCard
               key={subItem.id}
               item={subItem}
@@ -2015,61 +2767,121 @@ const ActivityCard = React.memo(({ item, level = 0, toggleExpand, isExpanded }) 
       )}
     </Animated.View>
   );
-});
+};
 
-// Filter Modal with professional styling
+// Filter Modal Component
 const FilterModal = ({ visible, onClose, currentFilter, onApplyFilter }) => {
   const [tempFilter, setTempFilter] = useState(currentFilter);
 
+  const filters = ['All', 'Not Started', 'In Progress', 'Completed'];
+
   return (
     <Modal visible={visible} animationType="slide" transparent>
-      <View className="flex-1 bg-black/30 justify-end">
-        <Animated.View entering={SlideInRight} className="bg-white rounded-t-2xl p-6">
-          <View className="flex-row justify-between items-center mb-4">
-            <Text className="text-lg font-semibold text-gray-900">Filter Activities</Text>
+      <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)', justifyContent: 'flex-end' }}>
+        <Animated.View entering={FadeInUp} style={{ 
+          backgroundColor: '#ffffff', 
+          borderTopLeftRadius: 24,
+          borderTopRightRadius: 24,
+          padding: 24
+        }}>
+          <View style={{ 
+            flexDirection: 'row', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            marginBottom: 24
+          }}>
+            <Text style={{ 
+              fontSize: 20, 
+              fontWeight: '700', 
+              color: '#1f2937' 
+            }}>
+              Filter Activities
+            </Text>
             <TouchableOpacity onPress={onClose}>
-              <Icon name="close" size={20} color="#6b7280" />
+              <Icon name="close" size={24} color="#6b7280" />
             </TouchableOpacity>
           </View>
           
-          <View className="space-y-3">
-            <Text className="text-base font-medium text-gray-800">Status</Text>
-            {['All', 'Not Started', 'In Progress', 'Completed'].map((status) => (
+          <View style={{ gap: 12 }}>
+            <Text style={{ 
+              fontSize: 16, 
+              fontWeight: '600', 
+              color: '#374151' 
+            }}>
+              Status
+            </Text>
+            {filters.map((status) => (
               <TouchableOpacity
                 key={status}
-                className={`p-3 rounded-lg border ${
-                  tempFilter === status || (status === 'All' && !tempFilter)
-                    ? 'border-blue-500 bg-blue-50' 
-                    : 'border-gray-200'
-                }`}
+                style={{
+                  padding: 16,
+                  borderRadius: 16,
+                  borderWidth: 2,
+                  borderColor: (tempFilter === status || (status === 'All' && !tempFilter)) 
+                    ? '#3b82f6' 
+                    : '#e5e7eb',
+                  backgroundColor: (tempFilter === status || (status === 'All' && !tempFilter)) 
+                    ? '#eff6ff' 
+                    : '#ffffff'
+                }}
                 onPress={() => setTempFilter(status === 'All' ? null : status)}
               >
-                <Text className={`font-medium ${
-                  tempFilter === status || (status === 'All' && !tempFilter)
-                    ? 'text-blue-600' 
-                    : 'text-gray-700'
-                }`}>
+                <Text style={{
+                  fontSize: 14,
+                  fontWeight: '600',
+                  color: (tempFilter === status || (status === 'All' && !tempFilter))
+                    ? '#3b82f6'
+                    : '#374151'
+                }}>
                   {status}
                 </Text>
               </TouchableOpacity>
             ))}
           </View>
           
-          <View className="flex-row space-x-3 mt-6">
+          <View style={{ 
+            flexDirection: 'row', 
+            gap: 12, 
+            marginTop: 24 
+          }}>
             <TouchableOpacity
-              className="flex-1 bg-gray-100 p-3 rounded-lg"
+              style={{
+                flex: 1,
+                backgroundColor: '#f3f4f6',
+                padding: 16,
+                borderRadius: 16,
+                alignItems: 'center'
+              }}
               onPress={onClose}
             >
-              <Text className="text-center font-medium text-gray-700">Cancel</Text>
+              <Text style={{ 
+                fontSize: 14, 
+                fontWeight: '600', 
+                color: '#374151' 
+              }}>
+                Cancel
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              className="flex-1 bg-blue-500 p-3 rounded-lg"
+              style={{
+                flex: 1,
+                backgroundColor: '#3b82f6',
+                padding: 16,
+                borderRadius: 16,
+                alignItems: 'center'
+              }}
               onPress={() => {
                 onApplyFilter(tempFilter);
                 onClose();
               }}
             >
-              <Text className="text-center font-medium text-white">Apply Filter</Text>
+              <Text style={{ 
+                fontSize: 14, 
+                fontWeight: '600', 
+                color: '#ffffff' 
+              }}>
+                Apply Filter
+              </Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -2133,10 +2945,34 @@ const ActivityScreen = () => {
   if (isLoading) {
     return (
       <MainLayout title="Activity">
-        <View className="flex-1 justify-center items-center bg-gray-50">
-          <View className="bg-white p-6 rounded-2xl shadow-md items-center">
-            <ActivityIndicator size="large" color="#2563eb" />
-            <Text className="mt-3 text-base font-medium text-gray-700">Loading activities...</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f8fafc' }}>
+          <View style={{ 
+            backgroundColor: '#ffffff', 
+            padding: 32, 
+            borderRadius: 24,
+            alignItems: 'center',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 4
+          }}>
+            <ActivityIndicator size="large" color="#3b82f6" />
+            <Text style={{ 
+              marginTop: 16, 
+              fontSize: 16, 
+              fontWeight: '600', 
+              color: '#374151' 
+            }}>
+              Loading activities...
+            </Text>
+            <Text style={{ 
+              marginTop: 8, 
+              fontSize: 14, 
+              color: '#6b7280' 
+            }}>
+              Please wait while we fetch your data
+            </Text>
           </View>
         </View>
       </MainLayout>
@@ -2145,72 +2981,128 @@ const ActivityScreen = () => {
 
   return (
     <MainLayout title="Activity">
-      <View className="flex-1 bg-gray-50">
-        {/* Header with subtle gradient */}
+      <View style={{ flex: 1, backgroundColor: '#f8fafc' }}>
+        {/* Header */}
         <LinearGradient 
-          colors={['#eff6ff', '#dbeafe']} 
+          colors={['#3b82f6', '#2563eb', '#1e40af']} 
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          className="px-4 pt-4 pb-6"
+          style={{ padding: 20 }}
         >
-          <View className="flex-row justify-between items-center mb-4">
+          <View style={{ 
+            flexDirection: 'row', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            marginBottom: 20
+          }}>
             <View>
-              <Text className="text-xl font-semibold text-gray-900">Project Activities</Text>
-              <Text className="text-xs text-gray-600 mt-1">
+              <Text style={{ 
+                fontSize: 24, 
+                fontWeight: '700', 
+                color: '#ffffff' 
+              }}>
+                Project Activities
+              </Text>
+              <Text style={{ 
+                fontSize: 14, 
+                color: 'rgba(255, 255, 255, 0.8)',
+                marginTop: 4
+              }}>
                 {sortedAndFilteredActivities.length} activities • {filterStatus || 'All statuses'}
               </Text>
             </View>
-            <View className="flex-row space-x-2">
+            <View style={{ flexDirection: 'row', gap: 8 }}>
               <TouchableOpacity
-                className="p-2 bg-blue-50 rounded-md"
+                style={{ 
+                  padding: 12, 
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)', 
+                  borderRadius: 16 
+                }}
                 onPress={handleRefresh}
               >
-                <Icon name="refresh" size={18} color="#2563eb" />
+                <Icon name="refresh" size={20} color="#ffffff" />
               </TouchableOpacity>
               <TouchableOpacity
-                className="p-2 bg-blue-50 rounded-md"
+                style={{ 
+                  padding: 12, 
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)', 
+                  borderRadius: 16 
+                }}
                 onPress={() => console.log('Add activity')}
               >
-                <Icon name="plus" size={18} color="#2563eb" />
+                <Icon name="plus" size={20} color="#ffffff" />
               </TouchableOpacity>
             </View>
           </View>
 
           {/* Search Bar */}
-          <View className="bg-white rounded-lg px-4 py-2 mb-4 shadow-sm">
-            <View className="flex-row items-center">
-              <Icon name="magnify" size={18} color="#6b7280" style={{ marginRight: 8 }} />
+          <View style={{ 
+            backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+            borderRadius: 16, 
+            padding: 16,
+            marginBottom: 16
+          }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Icon name="magnify" size={20} color="#ffffff" style={{ marginRight: 12 }} />
               <TextInput
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 placeholder="Search activities, IDs, or assignees..."
-                placeholderTextColor="#9ca3af"
-                className="flex-1 text-gray-700 text-sm"
+                placeholderTextColor="rgba(255, 255, 255, 0.6)"
+                style={{ 
+                  flex: 1, 
+                  color: '#ffffff', 
+                  fontSize: 16 
+                }}
               />
               {searchQuery.length > 0 && (
                 <TouchableOpacity onPress={() => setSearchQuery('')}>
-                  <Icon name="close-circle" size={18} color="#9ca3af" />
+                  <Icon name="close-circle" size={20} color="rgba(255, 255, 255, 0.6)" />
                 </TouchableOpacity>
               )}
             </View>
           </View>
 
           {/* Filter and Sort Controls */}
-          <View className="flex-row justify-between">
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <TouchableOpacity
-              className="flex-row items-center bg-blue-50 px-3 py-2 rounded-md"
+              style={{ 
+                flexDirection: 'row', 
+                alignItems: 'center',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 16
+              }}
               onPress={() => setShowFilterModal(true)}
             >
-              <Icon name="filter-outline" size={16} color="#2563eb" />
-              <Text className="text-blue-700 font-medium ml-2 text-sm">Filter</Text>
+              <Icon name="filter-outline" size={16} color="#ffffff" />
+              <Text style={{ 
+                color: '#ffffff', 
+                fontWeight: '600',
+                marginLeft: 8
+              }}>
+                Filter
+              </Text>
               {filterStatus && (
-                <View className="ml-2 bg-blue-100 px-2 py-0.5 rounded-md">
-                  <Text className="text-xs text-blue-700">{filterStatus}</Text>
+                <View style={{ 
+                  marginLeft: 8, 
+                  backgroundColor: 'rgba(255, 255, 255, 0.3)', 
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
+                  borderRadius: 12
+                }}>
+                  <Text style={{ 
+                    fontSize: 12, 
+                    color: '#ffffff' 
+                  }}>
+                    {filterStatus}
+                  </Text>
                 </View>
               )}
             </TouchableOpacity>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row' }}>
               {[
                 { key: 'name', label: 'Name' },
                 { key: 'progress', label: 'Progress' },
@@ -2220,16 +3112,30 @@ const ActivityScreen = () => {
                 <TouchableOpacity
                   key={key}
                   onPress={() => handleSort(key)}
-                  className={`flex-row items-center px-3 py-2 rounded-md mr-2 ${
-                    sortConfig.key === key ? 'bg-blue-100' : 'bg-blue-50'
-                  }`}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingHorizontal: 12,
+                    paddingVertical: 8,
+                    borderRadius: 16,
+                    marginRight: 8,
+                    backgroundColor: sortConfig.key === key 
+                      ? 'rgba(255, 255, 255, 0.3)' 
+                      : 'rgba(255, 255, 255, 0.1)'
+                  }}
                 >
-                  <Text className="text-blue-700 font-medium text-sm">{label}</Text>
+                  <Text style={{ 
+                    fontSize: 12, 
+                    color: '#ffffff', 
+                    fontWeight: '600' 
+                  }}>
+                    {label}
+                  </Text>
                   {sortConfig.key === key && (
                     <Icon
                       name={sortConfig.direction === 'asc' ? 'arrow-up' : 'arrow-down'}
                       size={14}
-                      color="#2563eb"
+                      color="#ffffff"
                       style={{ marginLeft: 4 }}
                     />
                   )}
@@ -2245,7 +3151,7 @@ const ActivityScreen = () => {
           showsVerticalScrollIndicator={false}
         >
           {sortedAndFilteredActivities.length > 0 ? (
-            sortedAndFilteredActivities.map((item, index) => (
+            sortedAndFilteredActivities.map((item) => (
               <ActivityCard
                 key={item.id}
                 item={item}
@@ -2256,22 +3162,52 @@ const ActivityScreen = () => {
             ))
           ) : (
             <Animated.View 
-              entering={FadeInUp} 
-              className="items-center justify-center py-12 bg-white rounded-2xl shadow-md"
+              entering={FadeInUp}
+              style={{ 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                padding: 40,
+                backgroundColor: '#ffffff',
+                borderRadius: 24,
+                margin: 16
+              }}
             >
-              <Icon name="folder-search-outline" size={48} color="#d1d5db" />
-              <Text className="text-base font-medium text-gray-600 mt-3">No activities found</Text>
-              <Text className="text-xs text-gray-500 mt-2 text-center px-8">
+              <Icon name="folder-search-outline" size={64} color="#d1d5db" />
+              <Text style={{ 
+                fontSize: 18, 
+                fontWeight: '600', 
+                color: '#6b7280',
+                marginTop: 16
+              }}>
+                No activities found
+              </Text>
+              <Text style={{ 
+                fontSize: 14, 
+                color: '#9ca3af',
+                marginTop: 8,
+                textAlign: 'center'
+              }}>
                 {searchQuery ? 
                   'Try adjusting your search terms or filters' : 
                   'Get started by creating your first activity'
                 }
               </Text>
               <TouchableOpacity 
-                className="bg-blue-500 px-6 py-2 rounded-md mt-4"
+                style={{ 
+                  backgroundColor: '#3b82f6', 
+                  paddingHorizontal: 24,
+                  paddingVertical: 12,
+                  borderRadius: 16,
+                  marginTop: 16
+                }}
                 onPress={() => console.log('Add first activity')}
               >
-                <Text className="text-white font-medium text-sm">Add Activity</Text>
+                <Text style={{ 
+                  color: '#ffffff', 
+                  fontWeight: '600' 
+                }}>
+                  Add Activity
+                </Text>
               </TouchableOpacity>
             </Animated.View>
           )}
