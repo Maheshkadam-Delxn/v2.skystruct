@@ -2917,7 +2917,7 @@ export default function DashboardScreen() {
             }}>
               {item.title}
             </Text>
-            {/* {getTrendIndicator(item.trend)} */}
+            {/*{getTrendIndicator(item.trend)}*/}
           </View>
           <View style={{
             width: 44,
