@@ -229,7 +229,7 @@ const BillPaymentCard = ({ item, expanded, onToggle }) => {
         {/* Header */}
         <TouchableOpacity onPress={onToggle}>
           <LinearGradient 
-            colors={['#e1e9feff', '#b3e5fc']}
+            colors={['#1e3a8a', '#1d4ed8']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={{ padding: 20 }}
@@ -239,14 +239,14 @@ const BillPaymentCard = ({ item, expanded, onToggle }) => {
                 <Text style={{ 
                   fontSize: 16, 
                   fontWeight: '700', 
-                  color: '#0277bd',
+                  color: '#ffffff',
                   marginBottom: 4
                 }}>
                   {item.poNo}
                 </Text>
                 <Text style={{ 
                   fontSize: 12, 
-                  color: '#0288d1',
+                  color: '#e0f2fe',
                   marginBottom: 4
                 }}>
                   PO Date: {item.poDate}
@@ -256,7 +256,7 @@ const BillPaymentCard = ({ item, expanded, onToggle }) => {
                 <Text style={{ 
                   fontSize: 14, 
                   fontWeight: '600', 
-                  color: '#0277bd',
+                  color: '#ffffff',
                   marginBottom: 4
                 }}>
                   {item.supplier}
@@ -264,7 +264,7 @@ const BillPaymentCard = ({ item, expanded, onToggle }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={{ 
                     fontSize: 12, 
-                    color: '#0288d1',
+                    color: '#e0f2fe',
                     marginRight: 8
                   }}>
                     {item.items} Item(s)
@@ -272,7 +272,7 @@ const BillPaymentCard = ({ item, expanded, onToggle }) => {
                   <Text style={{ 
                     fontSize: 14, 
                     fontWeight: '700', 
-                    color: '#01579b'
+                    color: '#ffffff'
                   }}>
                     {item.amount}
                   </Text>
@@ -281,7 +281,7 @@ const BillPaymentCard = ({ item, expanded, onToggle }) => {
               <Icon 
                 name={expanded ? 'chevron-up' : 'chevron-down'} 
                 size={24} 
-                color="#0277bd" 
+                color="#ffffff" 
                 style={{ marginLeft: 12 }} 
               />
             </View>
@@ -460,7 +460,7 @@ const FilterModal = ({ visible, onClose, currentFilter, onApplyFilter }) => {
                   borderRadius: 16,
                   borderWidth: 2,
                   borderColor: (tempFilter === status || (status === 'All' && !tempFilter)) 
-                    ? '#3b82f6' 
+                    ? '#1e3a8a' 
                     : '#e5e7eb',
                   backgroundColor: (tempFilter === status || (status === 'All' && !tempFilter)) 
                     ? '#eff6ff' 
@@ -472,7 +472,7 @@ const FilterModal = ({ visible, onClose, currentFilter, onApplyFilter }) => {
                   fontSize: 14,
                   fontWeight: '600',
                   color: (tempFilter === status || (status === 'All' && !tempFilter))
-                    ? '#3b82f6'
+                    ? '#1e3a8a'
                     : '#374151'
                 }}>
                   {status}
@@ -507,7 +507,7 @@ const FilterModal = ({ visible, onClose, currentFilter, onApplyFilter }) => {
             <TouchableOpacity
               style={{
                 flex: 1,
-                backgroundColor: '#3b82f6',
+                backgroundColor: '#1e3a8a',
                 padding: 16,
                 borderRadius: 16,
                 alignItems: 'center'
@@ -588,7 +588,7 @@ const BillPaymentScreen = () => {
             shadowRadius: 8,
             elevation: 4
           }}>
-            <ActivityIndicator size="large" color="#3b82f6" />
+            <ActivityIndicator size="large" color="#1e3a8a" />
             <Text style={{ 
               marginTop: 16, 
               fontSize: 16, 
@@ -608,7 +608,7 @@ const BillPaymentScreen = () => {
       <View style={{ flex: 1, backgroundColor: '#f8fafc' }}>
         {/* Header */}
         <LinearGradient 
-          colors={['#3b82f6', '#2563eb', '#1e40af']} 
+          colors={['#1e3a8a', '#1d4ed8']} 
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={{ padding: 20 }}
