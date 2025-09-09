@@ -1,15 +1,3 @@
-// import React from 'react';
-//   import { View, Text } from 'react-native';
-
-//   export default function BillScreen() {
-//     return (
-//       <View className="flex-1 justify-center items-center bg-white">
-//         <Text className="text-2xl font-bold text-gray-800">Bill of Quantity</Text>
-//         <Text className="text-gray-600 mt-2">Manage your bill of quantities here.</Text>
-//       </View>
-//     );
-//   }
-
 import React, { useState, useCallback, useMemo } from 'react';
 import { 
   View, 
@@ -116,12 +104,44 @@ const workOrderData = [
   }
 ];
 
+// Status Indicator Component
+const StatusIndicator = ({ status }) => {
+  const statusConfig = {
+    'Pending': { color: '#f59e0b', bg: '#fef3c7', icon: 'clock-outline' },
+    'Approved': { color: '#10b981', bg: '#d1fae5', icon: 'check-circle' },
+    'Rejected': { color: '#ef4444', bg: '#fee2e2', icon: 'close-circle' },
+  };
+
+  const statusCfg = statusConfig[status] || statusConfig['Pending'];
+
+  return (
+    <View style={{ 
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 16,
+      backgroundColor: statusCfg.bg,
+      alignSelf: 'flex-start'
+    }}>
+      <Icon name={statusCfg.icon} size={14} color={statusCfg.color} style={{ marginRight: 4 }} />
+      <Text style={{ 
+        fontSize: 12, 
+        fontWeight: '600', 
+        color: statusCfg.color 
+      }}>
+        {status}
+      </Text>
+    </View>
+  );
+};
+
 // Work Order Card Component
 const WorkOrderCard = ({ item, expanded, onToggle }) => {
   return (
     <Animated.View entering={FadeInDown.duration(500)}>
       <View style={{
-        borderRadius: 16,
+        borderRadius: 20,
         backgroundColor: '#ffffff',
         marginBottom: 16,
         overflow: 'hidden',
@@ -131,10 +151,10 @@ const WorkOrderCard = ({ item, expanded, onToggle }) => {
         shadowRadius: 8,
         elevation: 4,
       }}>
-        {/* Header */}
+        {/* Header - Applying light blue theme */}
         <TouchableOpacity onPress={onToggle}>
           <LinearGradient 
-            colors={['#e0f2fe', '#bae6fd']}
+            colors={['#dbeafe', '#bfdbfe']} // Light blue gradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={{ padding: 20 }}
@@ -142,17 +162,17 @@ const WorkOrderCard = ({ item, expanded, onToggle }) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
               <View style={{ flex: 1 }}>
                 <Text style={{ 
-                  fontSize: 16, 
+                  fontSize: 18, 
                   fontWeight: '700', 
-                  color: '#0369a1',
+                  color: '#1e40af',
                   marginBottom: 4
                 }}>
                   Work Order No: {item.workOrderNo}
                 </Text>
                 <Text style={{ 
-                  fontSize: 12, 
-                  color: '#0284c7',
-                  marginBottom: 4
+                  fontSize: 13, 
+                  color: '#3b82f6',
+                  marginBottom: 8
                 }}>
                   Date: {item.workOrderDate} | Vendor: {item.vendor}
                 </Text>
@@ -178,7 +198,7 @@ const WorkOrderCard = ({ item, expanded, onToggle }) => {
                 <Icon 
                   name={expanded ? 'chevron-up' : 'chevron-down'} 
                   size={24} 
-                  color="#0369a1" 
+                  color="#1e40af" 
                   style={{ marginLeft: 12 }} 
                 />
               </View>
@@ -285,18 +305,6 @@ const WorkOrderCard = ({ item, expanded, onToggle }) => {
                       <Icon name="email-outline" size={20} color="#ef4444" style={{ marginRight: 8 }} />
                       <Text style={{ color: '#ef4444', fontWeight: '600' }}>Email</Text>
                     </TouchableOpacity>
-                    
-                    <TouchableOpacity 
-                      style={{ 
-                        flexDirection: 'row', 
-                        alignItems: 'center',
-                        padding: 8
-                      }}
-                      onPress={() => console.log('More Options', bill.billNo)}
-                    >
-                      {/* <Icon name="dots-horizontal" size={20} color="#9ca3af" style={{ marginRight: 8 }} /> */}
-                      {/* <Text style={{ color: '#9ca3af', fontWeight: '600' }}>More</Text> */}
-                    </TouchableOpacity>
                   </View>
                 </View>
               ))}
@@ -334,7 +342,7 @@ const FilterModal = ({ visible, onClose, currentFilter, onApplyFilter }) => {
               fontWeight: '700', 
               color: '#1f2937' 
             }}>
-              Filter Work Orders
+              Filter Bills
             </Text>
             <TouchableOpacity onPress={onClose}>
               <Icon name="close" size={24} color="#6b7280" />
@@ -429,8 +437,8 @@ const FilterModal = ({ visible, onClose, currentFilter, onApplyFilter }) => {
   );
 };
 
-// Main Work Orders Screen Component
-const WorkOrdersScreen = () => {
+// Main Bills Screen Component
+const BillScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilterModal, setShowFilterModal] = useState(false);
@@ -499,33 +507,28 @@ const WorkOrdersScreen = () => {
   }
 
   return (
-    <MainLayout title="Bills ">
+    <MainLayout title="Bills">
       <View style={{ flex: 1, backgroundColor: '#f8fafc' }}>
-        {/* Header */}
-        <LinearGradient 
-          colors={['#1d4ed8', '#1e40af', '#1e3a8a']} 
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={{ padding: 20 }}
-        >
+        {/* Header - Matching the Work Orders Screen header exactly */}
+        <View style={{ backgroundColor: '#dbeafe', padding: 16 }}>
           <View style={{ 
             flexDirection: 'row', 
             justifyContent: 'space-between', 
             alignItems: 'center',
-            marginBottom: 20
+            marginBottom: 12
           }}>
             <View>
               <Text style={{ 
-                fontSize: 24, 
+                fontSize: 20, 
                 fontWeight: '700', 
-                color: '#ffffff' 
+                color: '#1e40af' 
               }}>
-                Bills 
+                Bills
               </Text>
               <Text style={{ 
-                fontSize: 14, 
-                color: 'rgba(255, 255, 255, 0.8)',
-                marginTop: 4
+                fontSize: 12, 
+                color: '#3b82f6',
+                marginTop: 2
               }}>
                 {filteredWorkOrderList.length} bills • {filterVendor || 'All vendors'}
               </Text>
@@ -533,77 +536,81 @@ const WorkOrdersScreen = () => {
             <View style={{ flexDirection: 'row', gap: 8 }}>
               <TouchableOpacity
                 style={{ 
-                  padding: 12, 
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)', 
-                  borderRadius: 16 
+                  padding: 10, 
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+                  borderRadius: 12 
                 }}
                 onPress={handleRefresh}
               >
-                <Icon name="refresh" size={20} color="#ffffff" />
+                <Icon name="refresh" size={18} color="#1e40af" />
               </TouchableOpacity>
             </View>
           </View>
 
-          {/* Search Bar */}
+          {/* Search and Filter Row */}
           <View style={{ 
-            backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-            borderRadius: 16, 
-            padding: 16,
-            marginBottom: 16
+            flexDirection: 'row', 
+            alignItems: 'center',
+            gap: 8
           }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="magnify" size={20} color="#ffffff" style={{ marginRight: 12 }} />
-              <TextInput
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                placeholder="Search work orders, vendors..."
-                placeholderTextColor="rgba(255, 255, 255, 0.6)"
-                style={{ 
-                  flex: 1, 
-                  color: '#ffffff', 
-                  fontSize: 16 
-                }}
-              />
-              {searchQuery.length > 0 && (
-                <TouchableOpacity onPress={() => setSearchQuery('')}>
-                  <Icon name="close-circle" size={20} color="rgba(255, 255, 255, 0.6)" />
-                </TouchableOpacity>
-              )}
+            {/* Search Bar */}
+            <View style={{ 
+              flex: 1,
+              backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+              borderRadius: 12, 
+              paddingHorizontal: 12,
+              height: 40,
+              justifyContent: 'center'
+            }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon name="magnify" size={18} color="#3b82f6" style={{ marginRight: 8 }} />
+                <TextInput
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  placeholder="Search work orders, vendors..."
+                  placeholderTextColor="#6b7280"
+                  style={{ 
+                    flex: 1, 
+                    color: '#1e40af', 
+                    fontSize: 14,
+                    paddingVertical: 0
+                  }}
+                />
+                {searchQuery.length > 0 && (
+                  <TouchableOpacity onPress={() => setSearchQuery('')}>
+                    <Icon name="close-circle" size={18} color="#6b7280" />
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-          </View>
 
-          {/* Filter Control */}
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+            {/* Filter Button */}
             <TouchableOpacity
               style={{ 
                 flexDirection: 'row', 
                 alignItems: 'center',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 16
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                paddingHorizontal: 12,
+                height: 40,
+                borderRadius: 12,
+                minWidth: 60,
+                justifyContent: 'center'
               }}
               onPress={() => setShowFilterModal(true)}
             >
-              <Icon name="filter-outline" size={16} color="#ffffff" />
-              <Text style={{ 
-                color: '#ffffff', 
-                fontWeight: '600',
-                marginLeft: 8
-              }}>
-                Filter
-              </Text>
+              <Icon name="filter-outline" size={16} color="#1e40af" />
               {filterVendor && (
                 <View style={{ 
-                  marginLeft: 8, 
-                  backgroundColor: 'rgba(255, 255, 255, 0.3)', 
-                  paddingHorizontal: 8,
-                  paddingVertical: 4,
-                  borderRadius: 12
+                  marginLeft: 4, 
+                  backgroundColor: '#3b82f6', 
+                  paddingHorizontal: 6,
+                  paddingVertical: 2,
+                  borderRadius: 8
                 }}>
                   <Text style={{ 
-                    fontSize: 12, 
-                    color: '#ffffff' 
+                    fontSize: 10, 
+                    color: '#ffffff',
+                    fontWeight: '600'
                   }}>
                     {filterVendor}
                   </Text>
@@ -611,9 +618,9 @@ const WorkOrdersScreen = () => {
               )}
             </TouchableOpacity>
           </View>
-        </LinearGradient>
+        </View>
 
-        {/* Work Order List */}
+        {/* Bills List */}
         <ScrollView 
           contentContainerStyle={{ padding: 16 }}
           showsVerticalScrollIndicator={false}
@@ -646,7 +653,7 @@ const WorkOrdersScreen = () => {
                 color: '#6b7280',
                 marginTop: 16
               }}>
-                No work orders found
+                No bills found
               </Text>
               <Text style={{ 
                 fontSize: 14, 
@@ -656,7 +663,7 @@ const WorkOrdersScreen = () => {
               }}>
                 {searchQuery ? 
                   'Try adjusting your search terms or filters' : 
-                  'No work orders available'
+                  'No bills available'
                 }
               </Text>
             </Animated.View>
@@ -675,4 +682,4 @@ const WorkOrdersScreen = () => {
   );
 };
 
-export default WorkOrdersScreen;
+export default BillScreen;

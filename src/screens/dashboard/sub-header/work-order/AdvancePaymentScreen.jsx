@@ -1,15 +1,3 @@
-// import React from 'react';
-//   import { View, Text } from 'react-native';
-
-//   export default function AdvancePaymentScreen() {
-//     return (
-//       <View className="flex-1 justify-center items-center bg-white">
-//         <Text className="text-2xl font-bold text-gray-800">Bill of Quantity</Text>
-//         <Text className="text-gray-600 mt-2">Manage your bill of quantities here.</Text>
-//       </View>
-//     );
-//   }
-
 import React, { useState, useCallback, useMemo } from 'react';
 import { 
   View, 
@@ -115,7 +103,7 @@ const AdvancePaymentCard = ({ item, expanded, onToggle }) => {
   return (
     <Animated.View entering={FadeInDown.duration(500)}>
       <View style={{
-        borderRadius: 16,
+        borderRadius: 20,
         backgroundColor: '#ffffff',
         marginBottom: 16,
         overflow: 'hidden',
@@ -125,10 +113,10 @@ const AdvancePaymentCard = ({ item, expanded, onToggle }) => {
         shadowRadius: 8,
         elevation: 4,
       }}>
-        {/* Header - Applying blue theme here */}
+        {/* Header - Applying light blue theme here */}
         <TouchableOpacity onPress={onToggle}>
           <LinearGradient 
-            colors={['#e0f2fe', '#bae6fd']} // Light blue gradient
+            colors={['#dbeafe', '#bfdbfe']} // Light blue gradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={{ padding: 20 }}
@@ -136,26 +124,26 @@ const AdvancePaymentCard = ({ item, expanded, onToggle }) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
               <View style={{ flex: 1 }}>
                 <Text style={{ 
-                  fontSize: 16, 
+                  fontSize: 18, 
                   fontWeight: '700', 
-                  color: '#0369a1', // Darker blue for contrast
+                  color: '#1e40af', // Darker blue for contrast
                   marginBottom: 4
                 }}>
                   {item.paymentNo}
                 </Text>
                 <Text style={{ 
-                  fontSize: 12, 
-                  color: '#0284c7', // Medium blue
-                  marginBottom: 4
+                  fontSize: 13, 
+                  color: '#3b82f6', // Medium blue
+                  marginBottom: 8
                 }}>
                   {item.vendor}
                 </Text>
               </View>
               <View style={{ alignItems: 'flex-end' }}>
                 <Text style={{ 
-                  fontSize: 14, 
-                  fontWeight: '600', 
-                  color: '#0369a1', // Darker blue for contrast
+                  fontSize: 16, 
+                  fontWeight: '700', 
+                  color: '#1e40af', // Darker blue for contrast
                   marginBottom: 4
                 }}>
                   {item.amount}
@@ -165,7 +153,7 @@ const AdvancePaymentCard = ({ item, expanded, onToggle }) => {
               <Icon 
                 name={expanded ? 'chevron-up' : 'chevron-down'} 
                 size={24} 
-                color="#0369a1" 
+                color="#1e40af" 
                 style={{ marginLeft: 12 }} 
               />
             </View>
@@ -491,31 +479,26 @@ const AdvancePaymentsScreen = () => {
   return (
     <MainLayout title="Advance Payments">
       <View style={{ flex: 1, backgroundColor: '#f8fafc' }}>
-        {/* Header - Using blue gradient theme */}
-        <LinearGradient 
-          colors={['#1d4ed8', '#1e40af', '#1e3a8a']} 
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={{ padding: 20 }}
-        >
+        {/* Header - Updated to match Work Order Screen header */}
+        <View style={{ backgroundColor: '#dbeafe', padding: 16 }}>
           <View style={{ 
             flexDirection: 'row', 
             justifyContent: 'space-between', 
             alignItems: 'center',
-            marginBottom: 20
+            marginBottom: 12
           }}>
             <View>
               <Text style={{ 
-                fontSize: 24, 
+                fontSize: 20, 
                 fontWeight: '700', 
-                color: '#ffffff' 
+                color: '#1e40af' 
               }}>
                 Advance Payments
               </Text>
               <Text style={{ 
-                fontSize: 14, 
-                color: 'rgba(255, 255, 255, 0.8)',
-                marginTop: 4
+                fontSize: 12, 
+                color: '#3b82f6',
+                marginTop: 2
               }}>
                 {filteredAdvancePaymentList.length} payments • {filterStatus || 'All statuses'}
               </Text>
@@ -523,77 +506,81 @@ const AdvancePaymentsScreen = () => {
             <View style={{ flexDirection: 'row', gap: 8 }}>
               <TouchableOpacity
                 style={{ 
-                  padding: 12, 
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)', 
-                  borderRadius: 16 
+                  padding: 10, 
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+                  borderRadius: 12 
                 }}
                 onPress={handleRefresh}
               >
-                <Icon name="refresh" size={20} color="#ffffff" />
+                <Icon name="refresh" size={18} color="#1e40af" />
               </TouchableOpacity>
             </View>
           </View>
 
-          {/* Search Bar */}
+          {/* Search and Filter Row */}
           <View style={{ 
-            backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-            borderRadius: 16, 
-            padding: 16,
-            marginBottom: 16
+            flexDirection: 'row', 
+            alignItems: 'center',
+            gap: 8
           }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="magnify" size={20} color="#ffffff" style={{ marginRight: 12 }} />
-              <TextInput
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                placeholder="Search payment no, vendors..."
-                placeholderTextColor="rgba(255, 255, 255, 0.6)"
-                style={{ 
-                  flex: 1, 
-                  color: '#ffffff', 
-                  fontSize: 16 
-                }}
-              />
-              {searchQuery.length > 0 && (
-                <TouchableOpacity onPress={() => setSearchQuery('')}>
-                  <Icon name="close-circle" size={20} color="rgba(255, 255, 255, 0.6)" />
-                </TouchableOpacity>
-              )}
+            {/* Search Bar */}
+            <View style={{ 
+              flex: 1,
+              backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+              borderRadius: 12, 
+              paddingHorizontal: 12,
+              height: 40,
+              justifyContent: 'center'
+            }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Icon name="magnify" size={18} color="#3b82f6" style={{ marginRight: 8 }} />
+                <TextInput
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  placeholder="Search payment no, vendors..."
+                  placeholderTextColor="#6b7280"
+                  style={{ 
+                    flex: 1, 
+                    color: '#1e40af', 
+                    fontSize: 14,
+                    paddingVertical: 0
+                  }}
+                />
+                {searchQuery.length > 0 && (
+                  <TouchableOpacity onPress={() => setSearchQuery('')}>
+                    <Icon name="close-circle" size={18} color="#6b7280" />
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-          </View>
 
-          {/* Filter Control */}
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+            {/* Filter Button */}
             <TouchableOpacity
               style={{ 
                 flexDirection: 'row', 
                 alignItems: 'center',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 16
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                paddingHorizontal: 12,
+                height: 40,
+                borderRadius: 12,
+                minWidth: 60,
+                justifyContent: 'center'
               }}
               onPress={() => setShowFilterModal(true)}
             >
-              <Icon name="filter-outline" size={16} color="#ffffff" />
-              <Text style={{ 
-                color: '#ffffff', 
-                fontWeight: '600',
-                marginLeft: 8
-              }}>
-                Filter
-              </Text>
+              <Icon name="filter-outline" size={16} color="#1e40af" />
               {filterStatus && (
                 <View style={{ 
-                  marginLeft: 8, 
-                  backgroundColor: 'rgba(255, 255, 255, 0.3)', 
-                  paddingHorizontal: 8,
-                  paddingVertical: 4,
-                  borderRadius: 12
+                  marginLeft: 4, 
+                  backgroundColor: '#3b82f6', 
+                  paddingHorizontal: 6,
+                  paddingVertical: 2,
+                  borderRadius: 8
                 }}>
                   <Text style={{ 
-                    fontSize: 12, 
-                    color: '#ffffff' 
+                    fontSize: 10, 
+                    color: '#ffffff',
+                    fontWeight: '600'
                   }}>
                     {filterStatus}
                   </Text>
@@ -601,7 +588,7 @@ const AdvancePaymentsScreen = () => {
               )}
             </TouchableOpacity>
           </View>
-        </LinearGradient>
+        </View>
 
         {/* Advance Payment List */}
         <ScrollView 
