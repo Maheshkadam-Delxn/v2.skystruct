@@ -2540,7 +2540,6 @@ export default function DashboardScreen() {
       icon: 'article',
       gradient: ['#FDF2F8', '#FCE7F3'],
       iconBg: '#EC4899',
-      trend: 'up',
       subheading: 'Document Review',
     },
   ];
