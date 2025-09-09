@@ -153,6 +153,7 @@ import BillScreen from './src/screens/dashboard/sub-header/work-order/BillScreen
 import WorkOrderScreen from './src/screens/dashboard/sub-header/work-order/WorkOrderScreen';
 
 import './global.css';
+import InventoryScreen from './src/screens/dashboard/sub-header/Inventory/InventoryScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -203,6 +204,10 @@ export default function App() {
         <Stack.Screen name="GoodReceiveNote" component={GoodReceiveNoteScreen} />
         <Stack.Screen name="Indent" component={IndentScreen} />
         <Stack.Screen name="PurchaseOrder" component={PurchaseOrderScreen} />
+
+        
+        {/* Inventory //currently dashboard screen does not have a dropdown to inventory so it must directly redorect to this page when clicked on inventry */}
+        <Stack.Screen name="Inventory" component={InventoryScreen} />
 
         {/* Approvals */}
         <Stack.Screen name="Inspection" component={InspectionScreen} />
