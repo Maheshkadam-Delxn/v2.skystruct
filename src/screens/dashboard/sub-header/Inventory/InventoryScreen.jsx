@@ -1032,36 +1032,6 @@ const InventoryScreen = () => {
   return (
     <MainLayout title="Inventory">
       <View style={{ flex: 1, backgroundColor: '#f8fafc' }}>
-        {/* Tabs */}
-        {/* <View style={{ 
-          flexDirection: 'row', 
-          justifyContent: 'space-between', 
-          borderBottomWidth: 1, 
-          borderBottomColor: '#e5e7eb', 
-          backgroundColor: '#ffffff',
-          paddingHorizontal: 16
-        }}>
-          {tabs.map(tab => (
-            <TouchableOpacity
-              key={tab.key}
-              style={{ 
-                paddingVertical: 12,
-                paddingHorizontal: 8,
-                borderBottomWidth: activeTab === tab.key ? 2 : 0,
-                borderBottomColor: activeTab === tab.key ? '#3b82f6' : 'transparent'
-              }}
-              onPress={() => setActiveTab(tab.key)}
-            >
-              <Text style={{ 
-                fontSize: 14, 
-                fontWeight: activeTab === tab.key ? '600' : '400',
-                color: activeTab === tab.key ? '#3b82f6' : '#6b7280'
-              }}>
-                {tab.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View> */}
 
         {/* Header - Matching the Work Order Screen header */}
         <View style={{ backgroundColor: '#dbeafe', padding: 16 }}>
